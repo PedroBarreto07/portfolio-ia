@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aurora | Agência digital premium: sites, marcas e experiências</title>
+  <meta name="description" content="A Aurora é uma agência digital premium que cria sites, marcas e experiências digitais de classe mundial. Pareça premium. Venda mais.">
+  <meta name="theme-color" content="#05060a">
+  <link rel="canonical" href="https://www.aurora.example/">
+  <link rel="alternate" hreflang="pt-BR" href="https://www.aurora.example/">
+  <link rel="alternate" hreflang="en" href="https://www.aurora.example/?lang=en">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aurora">
+  <meta property="og:title" content="Aurora | Pareça premium. Venda mais.">
+  <meta property="og:description" content="Sites, marcas e experiências digitais de classe mundial.">
+  <meta property="og:url" content="https://www.aurora.example/">
+  <meta property="og:image" content="https://www.aurora.example/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aurora | Pareça premium. Venda mais.">
+  <meta name="twitter:description" content="Sites, marcas e experiências digitais de classe mundial.">
+  <meta name="twitter:image" content="https://www.aurora.example/assets/images/og-image.jpg">
+
+  <!-- Dados estruturados: Organization + LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.aurora.example/#org",
+        "name": "Aurora",
+        "url": "https://www.aurora.example/",
+        "logo": "https://www.aurora.example/assets/images/logo-symbol.svg",
+        "email": "contato@aurora.example",
+        "description": "Agência digital premium que cria sites, marcas e experiências digitais."
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.aurora.example/#local",
+        "name": "Aurora — Escritório São Paulo",
+        "parentOrganization": { "@id": "https://www.aurora.example/#org" },
+        "image": "https://www.aurora.example/assets/images/og-image.jpg",
+        "telephone": "+55 11 4000-0000",
+        "priceRange": "$$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Paulista, 1000",
+          "addressLocality": "São Paulo",
+          "addressRegion": "SP",
+          "postalCode": "01310-100",
+          "addressCountry": "BR"
+        },
+        "openingHours": "Mo-Fr 09:00-18:00"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Antes de pintar: marca que o JS existe e se o usuário prefere menos movimento.
+       Os estados iniciais das animações só valem com .js e sem .reduce-motion. -->
+  <script>
+    (function () {
+      var h = document.documentElement;
+      h.classList.add('js');
+      var pref = null; try { pref = localStorage.getItem('aurora-motion'); } catch (e) {}
+      // Menos movimento se o usuário escolheu, ou se o sistema pede e ele não mudou isso no site
+      if (pref === 'off' || (pref !== 'on' && matchMedia('(prefers-reduced-motion: reduce)').matches)) h.classList.add('reduce-motion');
+      try { if (sessionStorage.getItem('aurora-visited')) h.classList.add('is-returning'); } catch (e) {}
+    })();
+  </script>
+
+  <!-- Performance: fontes e imagem do hero pré-carregadas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=League+Spartan:wght@500;700&display=swap">
+  <link rel="preload" as="image" href="assets/images/spaceship-window-2400.webp" imagesrcset="assets/images/spaceship-window-2400.webp 2400w, assets/images/spaceship-window.webp 4000w" imagesizes="100vw" media="(min-width: 992px)">
+  <link rel="preload" as="image" href="assets/images/spaceship-window-mobile.webp" media="(max-width: 991px)">
+  <link rel="preload" as="image" href="assets/images/space-earth.webp">
+
+  <link rel="stylesheet" href="assets/vendor/lenis.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/lenis.min.js" defer></script>
+  <script src="assets/vendor/barba.umd.js" defer></script>
+  <script src="assets/vendor/particles.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <!-- ===== Sprite de ícones (fica fora do container: é o mesmo em todas as páginas) ===== -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-wordmark" viewBox="0 0 750 80"><g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="round"><path d="M5 80 47 8l42 72M23 55h48M141 0v36a37.5 37.5 0 0 0 75 0V0M272 80V6.5h38a21.5 21.5 0 0 1 0 43h-38m31 0L348 80"/><circle cx="440.5" cy="40" r="33.5"/><path d="M534 80V6.5h38a21.5 21.5 0 0 1 0 43h-38m31 0L610 80M661 80l42-72 42 72M679 55h48"/></g></symbol>
+    <symbol id="i-symbol" viewBox="0 0 64 64"><circle cx="32" cy="32" r="12" fill="currentColor"/><ellipse cx="32" cy="32" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(-25 32 32)"/><circle cx="55.6" cy="20.6" r="3.6" fill="#2BB9A3"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></g></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M4.5 7.5h15M4.5 16.5h15"/></g></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.2 21.8l4.8-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.7-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.5 2.5 0 0 0 1.7-1.2 2 2 0 0 0 .1-1.2l-.4-.2z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="22" y="8" width="20" height="36" rx="4"/><path d="M29 38h6M50 30a18 18 0 0 1-18 22M36 48l-4 4 4 4"/></g></symbol>
+  </svg>
+
+  <a class="skip-link" href="#conteudo" data-i18n="a11y.skip">Pular para o conteúdo</a>
+
+  <div class="transition-wrapper" data-barba="wrapper">
+    <div class="transition-container" data-barba="container" data-barba-namespace="home">
+
+      <!-- ===================== PRELOADER: persiana de janela de avião ===================== -->
+      <div class="preloader" data-preloader aria-hidden="true">
+        <div class="preloader_front" data-preloader-front></div>
+        <div class="preloader_shade" data-preloader-shade>
+          <div class="preloader_handle" data-preloader-handle></div>
+        </div>
+        <div class="preloader_center grid _21-columns">
+          <div class="preloader_brand">
+            <svg class="preloader_symbol" data-preloader-word><use href="#i-symbol"/></svg>
+            <p class="l1 preloader_words"><span data-preloader-word>Aurora</span> <span data-preloader-word data-i18n="preloader.w2">Estúdio</span> <span data-preloader-word data-i18n="preloader.w3">Digital</span></p>
+          </div>
+        </div>
+        <div class="noise"></div>
+      </div>
+
+      <!-- ===================== HEADER ===================== -->
+      <header class="header theme_on-color" data-header>
+        <div class="header_inner container">
+          <nav class="header_nav" aria-label="Navegação principal" data-i18n-attr="aria-label:a11y.nav">
+            <a class="nav-item" href="#manifesto" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.manifesto">Manifesto</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.manifesto">Manifesto</span></span></a>
+            <a class="nav-item" href="#servicos" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.services">Serviços</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.services">Serviços</span></span></a>
+            <a class="nav-item" href="#mundo" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.world">Mundo</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.world">Mundo</span></span></a>
+            <a class="nav-item" href="#contato" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.contact">Contato</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.contact">Contato</span></span></a>
+          </nav>
+
+          <a class="header_logo" href="#inicio" data-header-logo aria-label="Aurora, voltar ao início" data-i18n-attr="aria-label:a11y.home">
+            <svg viewBox="0 0 750 80" aria-hidden="true"><use href="#i-wordmark"/></svg>
+          </a>
+
+          <div class="header_right">
+            <button class="lang-toggle t6" type="button" data-lang-toggle aria-label="Mudar idioma para inglês" data-i18n-attr="aria-label:a11y.lang">
+              <span data-lang="pt">PT</span><span class="lang-toggle_sep">/</span><span data-lang="en">EN</span>
+            </button>
+            <button class="nav-item nav-item--solid" type="button" data-popup-open="contact" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.talk">Fale conosco</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.talk">Fale conosco</span></span></button>
+            <button class="header_menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu-mobile">
+              <span class="sr-only" data-i18n="a11y.menu">Abrir menu</span>
+              <span class="header_menu-line"></span><span class="header_menu-line"></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Menu do celular -->
+      <div class="menu-mobile" id="menu-mobile" data-menu hidden>
+        <nav class="menu-mobile_nav" aria-label="Menu" data-i18n-attr="aria-label:a11y.menuNav">
+          <a class="h3" href="#manifesto" data-menu-link data-i18n="nav.manifesto">Manifesto</a>
+          <a class="h3" href="#servicos" data-menu-link data-i18n="nav.services">Serviços</a>
+          <a class="h3" href="#mundo" data-menu-link data-i18n="nav.world">Mundo</a>
+          <a class="h3" href="#contato" data-menu-link data-i18n="nav.contact">Contato</a>
+        </nav>
+        <div class="menu-mobile_bot" data-menu-link>
+          <a class="p6" href="mailto:contato@aurora.example">contato@aurora.example</a>
+          <p class="p7 menu-mobile_clock"><span data-i18n="world.hq">São Paulo</span> · <span data-clock data-timezone="America/Sao_Paulo">--:--</span></p>
+        </div>
+      </div>
+
+      <main id="conteudo">
+        <div class="intro_scroll-area">
+
+          <!-- ===================== HERO: atravessar a janela da estação ===================== -->
+          <section id="hero" class="hero" data-bg="color" aria-labelledby="hero-title">
+            <span id="inicio" class="anchor-top"></span>
+            <div class="hero_scroll-area" data-hero-area>
+              <div class="hero-w" data-hero-w>
+                <div class="hero-s" data-hero-s>
+                  <div class="container hero-s_inner">
+                    <h1 class="hero_title" id="hero-title">
+                      <span class="hero_title-left h1" data-hero-left><span class="hero_title-in" data-hero-words data-i18n="hero.left" data-i18n-html>Pareça<br>premium</span></span>
+                      <span class="hero_title-right h1" data-hero-right><span class="hero_title-in" data-hero-words data-i18n="hero.right" data-i18n-html>Venda<br>mais</span></span>
+                    </h1>
+                    <p class="hero_sub p6" data-hero-fade data-i18n="hero.sub">Não é só bonito — é feito para converter.</p>
+
+                    <div class="hero-s_bot" data-hero-bot>
+                      <ul class="hero_list t6" data-hero-fade>
+                        <li data-i18n="hero.l1">Pareça premium.</li>
+                        <li data-i18n="hero.l2">Atraia mais.</li>
+                        <li data-i18n="hero.l3">Venda mais.</li>
+                      </ul>
+                      <div class="hero_scroll" data-hero-fade>
+                        <div class="hero_scroll-text">
+                          <p class="t6" data-i18n="hero.scroll1">Role para baixo</p>
+                          <p class="p7 hero_scroll-sub" data-i18n="hero.scroll2">Para começar a jornada</p>
+                        </div>
+                        <svg class="hero_mouse" viewBox="0 0 24 40" aria-hidden="true">
+                          <rect class="hero_mouse-glow" x="1" y="1" width="22" height="38" rx="11"/>
+                          <rect x="1" y="1" width="22" height="38" rx="11" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                          <circle class="hero_mouse-dot" cx="12" cy="12" r="2.5" fill="currentColor"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Camadas do fundo: janela frontal (vidros transparentes) + overlay -->
+                <div class="hero-w_bg" data-hero-bg aria-hidden="true">
+                  <picture class="hero_window">
+                    <source media="(max-width: 991px)" srcset="assets/images/spaceship-window-mobile.webp">
+                    <img src="assets/images/spaceship-window-2400.webp" srcset="assets/images/spaceship-window-2400.webp 2400w, assets/images/spaceship-window.webp 4000w" sizes="100vw" alt="" width="4000" height="2250" fetchpriority="high" decoding="async">
+                  </picture>
+                  <div class="hero_overlay" data-hero-overlay></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================== ABOUT: céu, manifesto, serviços, mundo e contato ===================== -->
+          <section class="about" data-bg="color" aria-label="Sobre a Aurora" data-i18n-attr="aria-label:a11y.about">
+            <div class="about-w" data-about-w>
+              <div class="about-s" data-about-s>
+
+                <!-- Manifesto -->
+                <div class="container manifesto" id="manifesto">
+                  <div class="grid manifesto_grid">
+                    <p class="l1 label" data-char-reveal data-i18n="manifesto.label">Manifesto</p>
+                    <p class="h3 manifesto_text" data-highlight-text data-i18n="manifesto.text">A Aurora é uma agência digital premium que cria sites, marcas e experiências digitais de classe mundial. Unimos estratégia, design e tecnologia para transformar marcas comuns em referências — e visitantes em clientes.</p>
+                  </div>
+                  <div class="unit-60"></div>
+                  <div class="grid manifesto_grid">
+                    <div class="manifesto_side">
+                      <p class="p6 manifesto_p" data-line-reveal data-i18n="manifesto.p">Cada projeto começa com uma pergunta simples: o que faria alguém escolher você em três segundos? A resposta vira design, código e resultado.</p>
+                      <div class="unit-24"></div>
+                      <a class="btn" href="#servicos" data-btn-hover>
+                        <span class="btn_hover" aria-hidden="true"></span>
+                        <span class="btn_texts"><span class="btn_text l1" data-i18n="manifesto.btn">Conheça os serviços</span><span class="btn_text is-2 l1" aria-hidden="true" data-i18n="manifesto.btn">Conheça os serviços</span></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="unit-216"></div>
+
+                <!-- Serviços (acordeão) -->
+                <div class="container services" id="servicos">
+                  <div class="services_head">
+                    <p class="l1 label" data-char-reveal data-i18n="services.label">Serviços</p>
+                    <h2 class="h2 services_title" data-line-reveal data-i18n="services.title">Da órbita ao clique.</h2>
+                  </div>
+                  <div class="unit-60"></div>
+                  <div class="services_grid">
+                    <div class="accordion" data-accordion>
+                      <div class="accordion_item is-open" data-acc-item>
+                        <h3 class="accordion_h">
+                          <button class="accordion_btn" type="button" aria-expanded="true" aria-controls="acc-1" id="acc-1-btn" data-acc-btn>
+                            <span class="accordion_num l1">01</span>
+                            <span class="accordion_title h4" data-i18n="services.s1">Criação de sites</span>
+                            <span class="accordion_plus" aria-hidden="true"><span></span><span data-acc-plus-v></span></span>
+                          </button>
+                        </h3>
+                        <div class="accordion_panel" id="acc-1" role="region" aria-labelledby="acc-1-btn" data-acc-panel>
+                          <div class="accordion_panel-in">
+                            <p class="p6" data-i18n="services.s1p">Sites sob medida, rápidos e pensados para conversão. Do wireframe ao código, cada detalhe existe para vender.</p>
+                            <p class="accordion_tags l1" data-i18n="services.s1t">UX/UI · Desenvolvimento · CMS</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion_item" data-acc-item>
+                        <h3 class="accordion_h">
+                          <button class="accordion_btn" type="button" aria-expanded="false" aria-controls="acc-2" id="acc-2-btn" data-acc-btn>
+                            <span class="accordion_num l1">02</span>
+                            <span class="accordion_title h4" data-i18n="services.s2">Branding e identidade</span>
+                            <span class="accordion_plus" aria-hidden="true"><span></span><span data-acc-plus-v></span></span>
+                          </button>
+                        </h3>
+                        <div class="accordion_panel" id="acc-2" role="region" aria-labelledby="acc-2-btn" data-acc-panel hidden>
+                          <div class="accordion_panel-in">
+                            <p class="p6" data-i18n="services.s2p">Estratégia, logotipo e um sistema visual completo para a sua marca parecer tão grande quanto ela é.</p>
+                            <p class="accordion_tags l1" data-i18n="services.s2t">Naming · Logo · Guia de marca</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion_item" data-acc-item>
+                        <h3 class="accordion_h">
+                          <button class="accordion_btn" type="button" aria-expanded="false" aria-controls="acc-3" id="acc-3-btn" data-acc-btn>
+                            <span class="accordion_num l1">03</span>
+                            <span class="accordion_title h4" data-i18n="services.s3">E-commerce</span>
+                            <span class="accordion_plus" aria-hidden="true"><span></span><span data-acc-plus-v></span></span>
+                          </button>
+                        </h3>
+                        <div class="accordion_panel" id="acc-3" role="region" aria-labelledby="acc-3-btn" data-acc-panel hidden>
+                          <div class="accordion_panel-in">
+                            <p class="p6" data-i18n="services.s3p">Lojas que carregam em menos de dois segundos e transformam vitrine em checkout.</p>
+                            <p class="accordion_tags l1" data-i18n="services.s3t">Shopify · WooCommerce · CRO</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion_item" data-acc-item>
+                        <h3 class="accordion_h">
+                          <button class="accordion_btn" type="button" aria-expanded="false" aria-controls="acc-4" id="acc-4-btn" data-acc-btn>
+                            <span class="accordion_num l1">04</span>
+                            <span class="accordion_title h4" data-i18n="services.s4">Growth e SEO</span>
+                            <span class="accordion_plus" aria-hidden="true"><span></span><span data-acc-plus-v></span></span>
+                          </button>
+                        </h3>
+                        <div class="accordion_panel" id="acc-4" role="region" aria-labelledby="acc-4-btn" data-acc-panel hidden>
+                          <div class="accordion_panel-in">
+                            <p class="p6" data-i18n="services.s4p">Tráfego orgânico, dados e experimentos contínuos para crescer mês após mês, sem depender só de anúncios.</p>
+                            <p class="accordion_tags l1" data-i18n="services.s4t">SEO técnico · Analytics · Testes A/B</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion_item" data-acc-item>
+                        <h3 class="accordion_h">
+                          <button class="accordion_btn" type="button" aria-expanded="false" aria-controls="acc-5" id="acc-5-btn" data-acc-btn>
+                            <span class="accordion_num l1">05</span>
+                            <span class="accordion_title h4" data-i18n="services.s5">Experiências digitais</span>
+                            <span class="accordion_plus" aria-hidden="true"><span></span><span data-acc-plus-v></span></span>
+                          </button>
+                        </h3>
+                        <div class="accordion_panel" id="acc-5" role="region" aria-labelledby="acc-5-btn" data-acc-panel hidden>
+                          <div class="accordion_panel-in">
+                            <p class="p6" data-i18n="services.s5p">Animações, 3D e microinterações que fazem a sua marca ser lembrada e compartilhada.</p>
+                            <p class="accordion_tags l1" data-i18n="services.s5t">Motion · WebGL · Microinterações</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Imagem do serviço ativo (fotos da NASA) -->
+                    <div class="services_media" data-parallax="w">
+                      <div class="services_frame" data-acc-media>
+                        <div class="services_parallax" data-parallax="img" data-parallax-from="-10" data-parallax-to="10">
+                        <img class="services_img is-active" src="assets/images/services/launch.webp" alt="Lançamento do foguete Artemis I à noite" data-i18n-attr="alt:services.a1" width="960" height="1200" loading="lazy" data-acc-img>
+                        <img class="services_img" src="assets/images/services/nebula.webp" alt="Penhascos Cósmicos na Nebulosa de Carina, pelo telescópio James Webb" data-i18n-attr="alt:services.a2" width="960" height="1200" loading="lazy" data-acc-img>
+                        <img class="services_img" src="assets/images/services/spacewalk.webp" alt="Astronauta em caminhada espacial sobre a Terra" data-i18n-attr="alt:services.a3" width="960" height="1200" loading="lazy" data-acc-img>
+                        <img class="services_img" src="assets/images/services/aurora.webp" alt="Aurora boreal vista da Estação Espacial Internacional" data-i18n-attr="alt:services.a4" width="960" height="1200" loading="lazy" data-acc-img>
+                        <img class="services_img" src="assets/images/services/helmet.webp" alt="Reflexo no capacete de um astronauta durante caminhada espacial" data-i18n-attr="alt:services.a5" width="960" height="1200" loading="lazy" data-acc-img>
+                        </div>
+                      </div>
+                      <p class="services_credit p7" data-i18n="services.credit">Imagens: NASA</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="unit-216"></div>
+
+                <!-- Operando no mundo -->
+                <div class="container world" id="mundo">
+                  <div class="world_grid">
+                    <div class="world_info">
+                      <div class="world_title-row">
+                        <svg class="world_icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                        <span class="world_line" aria-hidden="true"></span>
+                        <h2 class="p5" data-char-reveal data-i18n="world.title">Operando no mundo</h2>
+                      </div>
+                      <div class="unit-36"></div>
+                      <div class="world_rotator" data-city-rotator>
+                        <p class="h2 world_city" data-city-name aria-live="off">São Paulo</p>
+                      </div>
+                      <div class="unit-12"></div>
+                      <p class="world_time">
+                        <span class="h4 world_clock" data-clock data-city-clock data-timezone="America/Sao_Paulo">--:--</span>
+                        <span class="l1 world_gmt" data-city-gmt></span>
+                      </p>
+                      <div class="unit-36"></div>
+                      <p class="p6 world_p" data-line-reveal data-i18n="world.p">Base em São Paulo, clientes em quatro continentes. Trabalhamos em português, inglês e espanhol, no seu fuso.</p>
+                      <div class="unit-24"></div>
+                      <p class="p7 world_hint" data-i18n="world.hint">Arraste o globo para girar.</p>
+                    </div>
+                    <div class="world_globe" data-div-reveal>
+                      <canvas class="world_canvas" data-globe aria-label="Globo girando com as cidades onde atuamos" data-i18n-attr="aria-label:world.globe" role="img"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Contato (card de vidro) -->
+                <div class="container contact" id="contato">
+                  <div class="contact_grid">
+                    <div class="contact_info">
+                      <p class="l1 label" data-char-reveal data-i18n="contact.label">Contato</p>
+                      <div class="unit-24"></div>
+                      <h2 class="h3 contact_title" data-line-reveal data-i18n="contact.title">Vamos tornar sua marca inesquecível.</h2>
+                      <div class="unit-24"></div>
+                      <p class="p6 contact_p" data-line-reveal data-i18n="contact.p">Conte onde você quer chegar. Em até 24 horas, você recebe um diagnóstico gratuito e os próximos passos.</p>
+                      <div class="unit-48"></div>
+                      <ul class="contact_list" data-div-reveal>
+                        <li>
+                          <span class="contact_icon"><svg aria-hidden="true"><use href="#i-mail"/></svg></span>
+                          <div><p class="l1 contact_k" data-i18n="contact.email">E-mail</p><a class="p6" href="mailto:contato@aurora.example">contato@aurora.example</a></div>
+                        </li>
+                        <li>
+                          <span class="contact_icon"><svg aria-hidden="true"><use href="#i-pin"/></svg></span>
+                          <div><p class="l1 contact_k" data-i18n="contact.office1">Escritório 1 · São Paulo</p><a class="p6" href="tel:+551140000000">+55 11 4000-0000</a><p class="p7 contact_addr">Av. Paulista, 1000 · São Paulo, SP</p></div>
+                        </li>
+                        <li>
+                          <span class="contact_icon"><svg aria-hidden="true"><use href="#i-pin"/></svg></span>
+                          <div><p class="l1 contact_k" data-i18n="contact.office2">Escritório 2 · Lisboa</p><a class="p6" href="tel:+351210000000">+351 21 000 0000</a><p class="p7 contact_addr">Av. da Liberdade, 110 · Lisboa</p></div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="glass-card" data-div-reveal>
+                      <p class="badge"><span class="badge_dot"></span><span data-i18n="contact.badge">Conectado</span></p>
+                      <h3 class="glass-card_title" data-i18n="contact.cardTitle">Da marca ao ícone.</h3>
+                      <p class="glass-card_sub" data-i18n="contact.cardSub">Retornamos em até 24h.</p>
+
+                      <a class="wa-btn" href="https://wa.me/5511900000000" data-whatsapp target="_blank" rel="noopener">
+                        <span class="wa-btn_icon"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+                        <span class="wa-btn_text"><strong data-i18n="contact.waTitle">Conversar no WhatsApp</strong><span data-i18n="contact.waSub">Resposta rápida em horário comercial</span></span>
+                        <svg class="wa-btn_arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+                      </a>
+
+                      <p class="divider"><span data-i18n="contact.divider">ou preencha o formulário</span></p>
+
+                      <form class="g-form" data-form="contact" novalidate>
+                        <div class="form-alert" data-form-error role="alert" hidden></div>
+                        <!-- Honeypot anti-spam: humanos não veem, robôs preenchem -->
+                        <div class="hp" aria-hidden="true"><label>Não preencha <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+                        <input type="hidden" name="origem" value="Formulário de contato (card)">
+
+                        <div class="g-field" data-field="name">
+                          <label for="c-nome"><span data-i18n="form.name">Nome</span> <span class="req" aria-hidden="true">*</span></label>
+                          <input class="g-input" id="c-nome" name="nome" type="text" autocomplete="name" required aria-describedby="c-nome-erro" placeholder="Seu nome completo" data-i18n-attr="placeholder:form.namePh">
+                          <p class="field_error" id="c-nome-erro"></p>
+                        </div>
+                        <div class="g-field" data-field="email">
+                          <label for="c-email"><span data-i18n="form.email">E-mail</span> <span class="req" aria-hidden="true">*</span></label>
+                          <input class="g-input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-erro" placeholder="voce@empresa.com" data-i18n-attr="placeholder:form.emailPh">
+                          <p class="field_error" id="c-email-erro"></p>
+                        </div>
+                        <div class="g-row">
+                          <div class="g-field" data-field="select">
+                            <label for="c-pais"><span data-i18n="form.country">País</span> <span class="req" aria-hidden="true">*</span></label>
+                            <div class="g-select">
+                              <select class="g-input" id="c-pais" name="pais" required aria-describedby="c-pais-erro" data-country>
+                                <option value="" data-i18n="form.countryPh">Selecione</option>
+                                <option value="Brasil" data-dial="55" selected data-i18n="c.br">Brasil</option>
+                                <option value="Portugal" data-dial="351">Portugal</option>
+                                <option value="Estados Unidos" data-dial="1" data-i18n="c.us">Estados Unidos</option>
+                                <option value="Canadá" data-dial="1" data-i18n="c.ca">Canadá</option>
+                                <option value="México" data-dial="52" data-i18n="c.mx">México</option>
+                                <option value="Argentina" data-dial="54">Argentina</option>
+                                <option value="Chile" data-dial="56">Chile</option>
+                                <option value="Colômbia" data-dial="57" data-i18n="c.co">Colômbia</option>
+                                <option value="Espanha" data-dial="34" data-i18n="c.es">Espanha</option>
+                                <option value="França" data-dial="33" data-i18n="c.fr">França</option>
+                                <option value="Reino Unido" data-dial="44" data-i18n="c.uk">Reino Unido</option>
+                                <option value="Alemanha" data-dial="49" data-i18n="c.de">Alemanha</option>
+                                <option value="Emirados Árabes" data-dial="971" data-i18n="c.ae">Emirados Árabes</option>
+                                <option value="Austrália" data-dial="61" data-i18n="c.au">Austrália</option>
+                                <option value="Singapura" data-dial="65" data-i18n="c.sg">Singapura</option>
+                                <option value="Outro" data-dial="" data-i18n="c.other">Outro</option>
+                              </select>
+                              <svg class="g-select_chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <p class="field_error" id="c-pais-erro"></p>
+                          </div>
+                          <div class="g-field" data-field="tel">
+                            <label for="c-tel"><span data-i18n="form.phone">Telefone</span> <span class="req" aria-hidden="true">*</span></label>
+                            <div class="g-tel">
+                              <span class="g-tel_dial" data-dial-label>+55</span>
+                              <input class="g-input" id="c-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" required aria-describedby="c-tel-erro" placeholder="(11) 91234-5678" data-phone>
+                            </div>
+                            <p class="field_error" id="c-tel-erro"></p>
+                          </div>
+                        </div>
+                        <fieldset class="g-field g-chips" data-field="group" aria-describedby="c-servicos-erro">
+                          <legend><span data-i18n="form.help">Com o que precisa de ajuda?</span> <span class="req" aria-hidden="true">*</span></legend>
+                          <div class="chips">
+                            <label class="chip"><input type="checkbox" name="servicos" value="Criação de site"><span data-i18n="chip.site">Criação de site</span></label>
+                            <label class="chip"><input type="checkbox" name="servicos" value="Redesign"><span>Redesign</span></label>
+                            <label class="chip"><input type="checkbox" name="servicos" value="E-commerce"><span>E-commerce</span></label>
+                            <label class="chip"><input type="checkbox" name="servicos" value="Growth/SEO"><span>Growth/SEO</span></label>
+                            <label class="chip"><input type="checkbox" name="servicos" value="Outro"><span data-i18n="chip.other">Outro</span></label>
+                          </div>
+                          <p class="field_error" id="c-servicos-erro"></p>
+                        </fieldset>
+                        <div class="g-field g-check" data-field="consent">
+                          <label>
+                            <input type="checkbox" name="consentimento" value="sim" required aria-describedby="c-consent-erro">
+                            <span class="g-check_box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+                            <span class="g-check_text"><span data-i18n="form.consent">Concordo com o uso dos meus dados apenas para responder a este contato, conforme a</span> <a href="privacidade.html#privacidade" data-i18n="form.policy">Política de Privacidade</a>.</span>
+                          </label>
+                          <p class="field_error" id="c-consent-erro"></p>
+                        </div>
+                        <button class="g-submit" type="submit" data-submit>
+                          <span class="g-submit_spinner" aria-hidden="true"></span>
+                          <span data-submit-label data-i18n="form.send">Enviar</span>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- ===================== CÉU (fica atrás de tudo) ===================== -->
+          <div class="sky-bg" aria-hidden="true">
+            <div class="sky-bg_hero" data-sky-hero>
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/images/space-earth-1280.webp">
+                <img class="sky-bg_img" src="assets/images/space-earth.webp" alt="" width="2400" height="1560" decoding="async">
+              </picture>
+              <div class="sky-bg_sticky"><div class="sky-bg_particles" id="particles-hero" data-particles="hero"></div></div>
+              <div class="sky-bg_hero-grad"></div>
+            </div>
+            <div class="sky-bg_about">
+              <picture>
+                <source type="image/avif" srcset="assets/images/sky-about.avif">
+                <img class="sky-bg_img" src="assets/images/sky-about.webp" alt="" width="2000" height="4000" loading="lazy" decoding="async">
+              </picture>
+              <div class="sky-bg_about-grad"></div>
+              <div class="sky-bg_sticky"><div class="sky-bg_particles" id="particles-about" data-particles="about"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================== RODAPÉ (tema claro: "pousamos") ===================== -->
+        <footer class="footer theme_on-light" data-bg="light">
+          <div class="noise"></div>
+          <div class="container">
+            <div class="footer_top">
+              <p class="h4 footer_claim" data-line-reveal data-i18n="footer.claim">Pronto para decolar? A próxima marca inesquecível pode ser a sua.</p>
+              <button class="btn btn--dark" type="button" data-popup-open="contact" data-btn-hover>
+                <span class="btn_hover" aria-hidden="true"></span>
+                <span class="btn_texts"><span class="btn_text l1" data-i18n="footer.cta">Começar um projeto</span><span class="btn_text is-2 l1" aria-hidden="true" data-i18n="footer.cta">Começar um projeto</span></span>
+              </button>
+            </div>
+            <div class="unit-96"></div>
+            <div class="footer_cols">
+              <div>
+                <p class="l1 footer_k" data-i18n="footer.nav">Navegação</p>
+                <ul class="footer_list p6">
+                  <li><a href="#manifesto" data-i18n="nav.manifesto">Manifesto</a></li>
+                  <li><a href="#servicos" data-i18n="nav.services">Serviços</a></li>
+                  <li><a href="#mundo" data-i18n="nav.world">Mundo</a></li>
+                  <li><a href="#contato" data-i18n="nav.contact">Contato</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="l1 footer_k" data-i18n="footer.talk">Fale com a gente</p>
+                <ul class="footer_list p6">
+                  <li><a href="mailto:contato@aurora.example">contato@aurora.example</a></li>
+                  <li><a href="https://wa.me/5511900000000" data-whatsapp target="_blank" rel="noopener">WhatsApp</a></li>
+                  <li><a href="tel:+551140000000">+55 11 4000-0000</a></li>
+                </ul>
+              </div>
+              <div>
+                <p class="l1 footer_k" data-i18n="footer.time">Agora em São Paulo</p>
+                <p class="h4 footer_clock" data-clock data-timezone="America/Sao_Paulo">--:--</p>
+              </div>
+            </div>
+            <div class="unit-60"></div>
+            <svg class="footer_wordmark" viewBox="0 0 750 80" aria-hidden="true" data-div-reveal><use href="#i-wordmark"/></svg>
+            <div class="unit-36"></div>
+            <div class="footer_bot p7">
+              <p>© <span data-year>2026</span> Aurora. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+              <nav class="footer_legal" aria-label="Links legais" data-i18n-attr="aria-label:a11y.legal">
+                <a href="privacidade.html#privacidade" data-i18n="legal.privacy">Política de Privacidade</a><span aria-hidden="true">|</span>
+                <a href="privacidade.html#aviso-legal" data-i18n="legal.notice">Aviso Legal</a><span aria-hidden="true">|</span>
+                <a href="privacidade.html#termos" data-i18n="legal.terms">Termos</a><span aria-hidden="true">|</span>
+                <button type="button" class="footer_cookies" data-cookie-open data-i18n="legal.cookies">Cookies</button><span aria-hidden="true">|</span>
+                <button type="button" class="footer_cookies" data-motion-toggle>Animações</button>
+              </nav>
+              <p data-i18n="footer.nasa">Fotos: NASA (domínio público).</p>
+            </div>
+            <div class="unit-96 footer_cta-space"></div>
+          </div>
+        </footer>
+      </main>
+
+      <!-- ===================== CTA FLUTUANTE (botões magnéticos) ===================== -->
+      <div class="cta" data-cta>
+        <div class="cta_pill" data-cta-pill>
+          <div class="cta_slot">
+            <button class="cta_btn" type="button" data-popup-open="contact" data-cta-main data-magnetic-strength="25" data-magnetic-strength-inner="12">
+              <span class="cta_btn-inner" data-magnetic-inner>
+                <span class="cta_text t6" data-cta-text data-i18n="cta.start">Começar projeto</span>
+                <span class="cta_text is-2 t6" data-cta-text2 aria-hidden="true" data-i18n="cta.start">Começar projeto</span>
+              </span>
+            </button>
+            <button class="cta_close t6" type="button" data-popup-close data-cta-close tabindex="-1" aria-hidden="true">
+              <svg aria-hidden="true"><use href="#i-close"/></svg><span data-i18n="cta.close">Fechar</span>
+            </button>
+          </div>
+          <button class="cta_icon" type="button" data-popup-open="contact" data-cta-icon data-magnetic-strength="25" data-magnetic-strength-inner="10" aria-label="Abrir formulário de contato" data-i18n-attr="aria-label:cta.open">
+            <span class="cta_icon-inner" data-magnetic-inner>
+              <svg class="cta_arrow" data-cta-arrow aria-hidden="true"><use href="#i-arrow"/></svg>
+              <svg class="cta_arrow is-2" data-cta-arrow2 aria-hidden="true"><use href="#i-arrow"/></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===================== POPUP DO FORMULÁRIO ===================== -->
+      <div class="pop-up_cta" data-popup="contact" role="dialog" aria-modal="true" aria-labelledby="popup-title" aria-hidden="true">
+        <div class="pop-up_overlay" data-popup-overlay data-popup-close></div>
+        <div class="pop-up_modal theme_on-light" data-popup-modal data-lenis-prevent>
+          <div class="pop-up_scroll" data-lenis-scroll>
+            <div class="pop-up_content grid _21-columns">
+              <div class="pop-up_left">
+                <p class="l1 label" data-i18n="popup.label">Novo projeto</p>
+                <div class="unit-24"></div>
+                <h2 class="h3" id="popup-title" data-i18n="popup.title">Vamos conversar sobre o seu projeto.</h2>
+                <div class="unit-24"></div>
+                <p class="p6 pop-up_p" data-i18n="popup.p">Conte um pouco sobre a sua marca. Respondemos em até 24 horas úteis com ideias e um orçamento.</p>
+                <div class="unit-36"></div>
+                <ul class="pop-up_contacts p6">
+                  <li><svg aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:contato@aurora.example">contato@aurora.example</a></li>
+                  <li><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><a href="https://wa.me/5511900000000" data-whatsapp target="_blank" rel="noopener">WhatsApp</a></li>
+                </ul>
+              </div>
+
+              <form class="l-form" data-form="popup" novalidate>
+                <div class="form-alert" data-form-error role="alert" hidden></div>
+                <div class="hp" aria-hidden="true"><label>Não preencha <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+                <input type="hidden" name="origem" value="Popup Começar projeto">
+
+                <div class="l-row">
+                  <div class="l-field" data-field="name">
+                    <label class="l1" for="p-nome"><span data-i18n="form.name">Nome</span> *</label>
+                    <input id="p-nome" name="nome" type="text" autocomplete="name" required aria-describedby="p-nome-erro">
+                    <p class="field_error" id="p-nome-erro"></p>
+                  </div>
+                  <div class="l-field" data-field="email">
+                    <label class="l1" for="p-email"><span data-i18n="form.email">E-mail</span> *</label>
+                    <input id="p-email" name="email" type="email" autocomplete="email" required aria-describedby="p-email-erro">
+                    <p class="field_error" id="p-email-erro"></p>
+                  </div>
+                </div>
+                <div class="l-row">
+                  <div class="l-field" data-field="optional">
+                    <label class="l1" for="p-empresa" data-i18n="form.company">Empresa</label>
+                    <input id="p-empresa" name="empresa" type="text" autocomplete="organization">
+                  </div>
+                  <div class="l-field" data-field="tel">
+                    <label class="l1" for="p-tel"><span data-i18n="form.whats">WhatsApp</span> *</label>
+                    <input id="p-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="p-tel-erro" placeholder="(11) 91234-5678" data-phone>
+                    <p class="field_error" id="p-tel-erro"></p>
+                  </div>
+                </div>
+                <fieldset class="l-field l-chips" data-field="optional">
+                  <legend class="l1" data-i18n="form.budget">Investimento previsto</legend>
+                  <div class="chips chips--light">
+                    <label class="chip"><input type="radio" name="orcamento" value="Até R$ 15 mil"><span data-i18n="budget.1">Até R$ 15 mil</span></label>
+                    <label class="chip"><input type="radio" name="orcamento" value="R$ 15–40 mil"><span data-i18n="budget.2">R$ 15–40 mil</span></label>
+                    <label class="chip"><input type="radio" name="orcamento" value="R$ 40–80 mil"><span data-i18n="budget.3">R$ 40–80 mil</span></label>
+                    <label class="chip"><input type="radio" name="orcamento" value="Acima de R$ 80 mil"><span data-i18n="budget.4">Acima de R$ 80 mil</span></label>
+                  </div>
+                </fieldset>
+                <div class="l-field" data-field="message">
+                  <label class="l1" for="p-msg"><span data-i18n="form.message">Sobre o projeto</span> *</label>
+                  <textarea id="p-msg" name="mensagem" rows="3" required aria-describedby="p-msg-erro" placeholder="Objetivo, prazo, referências…" data-i18n-attr="placeholder:form.messagePh"></textarea>
+                  <p class="field_error" id="p-msg-erro"></p>
+                </div>
+                <div class="l-field g-check g-check--light" data-field="consent">
+                  <label>
+                    <input type="checkbox" name="consentimento" value="sim" required aria-describedby="p-consent-erro">
+                    <span class="g-check_box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+                    <span class="g-check_text"><span data-i18n="form.consent">Concordo com o uso dos meus dados apenas para responder a este contato, conforme a</span> <a href="privacidade.html#privacidade" data-i18n="form.policy">Política de Privacidade</a>.</span>
+                  </label>
+                  <p class="field_error" id="p-consent-erro"></p>
+                </div>
+                <button class="l-submit" type="submit" data-submit data-btn-hover>
+                  <span class="btn_hover" aria-hidden="true"></span>
+                  <span class="g-submit_spinner" aria-hidden="true"></span>
+                  <span class="btn_texts"><span class="btn_text t6" data-submit-label data-i18n="form.sendMsg">Enviar mensagem</span><span class="btn_text is-2 t6" aria-hidden="true" data-i18n="form.sendMsg">Enviar mensagem</span></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tela de sucesso (compartilhada pelos dois formulários) -->
+      <div class="success" data-success role="alertdialog" aria-modal="true" aria-labelledby="success-title" aria-describedby="success-text" aria-hidden="true">
+        <div class="success_card theme_on-light" data-success-card>
+          <span class="success_icon"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2 class="h4" id="success-title" data-i18n="success.title">Mensagem enviada!</h2>
+          <p class="p6" id="success-text" data-success-text>Obrigado! Respondemos em até 24 horas.</p>
+          <button class="btn btn--dark" type="button" data-success-close data-btn-hover>
+            <span class="btn_hover" aria-hidden="true"></span>
+            <span class="btn_texts"><span class="btn_text l1" data-i18n="success.close">Voltar ao site</span><span class="btn_text is-2 l1" aria-hidden="true" data-i18n="success.close">Voltar ao site</span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Aviso para girar o celular -->
+      <div class="landscape-cover" aria-hidden="true">
+        <svg><use href="#i-rotate"/></svg>
+        <p class="p6" data-i18n="landscape">Gire o celular para a vertical para a melhor experiência.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Banner de cookies (LGPD): fora do container, persiste entre páginas ===== -->
+  <div class="cookie" data-cookie role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <p class="cookie_title t6" id="cookie-title" data-i18n="cookie.title">Cookies, só com a sua permissão</p>
+    <p class="cookie_p p7" data-i18n-html data-i18n="cookie.p">Usamos cookies de medição (Google Analytics) apenas se você aceitar. Saiba mais na <a href="privacidade.html#cookies">Política de Privacidade</a>.</p>
+    <div class="cookie_btns">
+      <button type="button" class="cookie_btn" data-cookie-choice="deny" data-i18n="cookie.deny">Recusar</button>
+      <button type="button" class="cookie_btn is-accept" data-cookie-choice="accept" data-i18n="cookie.accept">Aceitar</button>
+    </div>
+  </div>
+
+  <noscript><style>.preloader{display:none}</style></noscript>
+</body>
+</html>

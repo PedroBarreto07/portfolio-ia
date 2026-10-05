@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aurora | Política de Privacidade, Aviso Legal e Termos</title>
+  <meta name="description" content="Como a Aurora coleta, usa e protege seus dados (LGPD), além do aviso legal e dos termos de uso do site.">
+  <meta name="theme-color" content="#F2EDE6">
+  <link rel="canonical" href="https://www.aurora.example/privacidade.html">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aurora | Política de Privacidade">
+  <meta property="og:image" content="https://www.aurora.example/assets/images/og-image.jpg">
+  <script>
+    (function () {
+      var h = document.documentElement;
+      h.classList.add('js');
+      var pref = null; try { pref = localStorage.getItem('aurora-motion'); } catch (e) {}
+      // Menos movimento se o usuário escolheu, ou se o sistema pede e ele não mudou isso no site
+      if (pref === 'off' || (pref !== 'on' && matchMedia('(prefers-reduced-motion: reduce)').matches)) h.classList.add('reduce-motion');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=League+Spartan:wght@500;700&display=swap">
+  <link rel="stylesheet" href="assets/vendor/lenis.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/lenis.min.js" defer></script>
+  <script src="assets/vendor/barba.umd.js" defer></script>
+  <script src="assets/vendor/particles.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body class="page-light">
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-wordmark" viewBox="0 0 750 80"><g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="round"><path d="M5 80 47 8l42 72M23 55h48M141 0v36a37.5 37.5 0 0 0 75 0V0M272 80V6.5h38a21.5 21.5 0 0 1 0 43h-38m31 0L348 80"/><circle cx="440.5" cy="40" r="33.5"/><path d="M534 80V6.5h38a21.5 21.5 0 0 1 0 43h-38m31 0L610 80M661 80l42-72 42 72M679 55h48"/></g></symbol>
+    <symbol id="i-symbol" viewBox="0 0 64 64"><circle cx="32" cy="32" r="12" fill="currentColor"/><ellipse cx="32" cy="32" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(-25 32 32)"/><circle cx="55.6" cy="20.6" r="3.6" fill="#2BB9A3"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#conteudo" data-i18n="a11y.skip">Pular para o conteúdo</a>
+
+  <div class="transition-wrapper" data-barba="wrapper">
+    <div class="transition-container" data-barba="container" data-barba-namespace="legal">
+
+      <header class="header theme_on-light" data-header>
+        <div class="header_inner container">
+          <nav class="header_nav" aria-label="Navegação principal" data-i18n-attr="aria-label:a11y.nav">
+            <a class="nav-item" href="index.html#manifesto" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.manifesto">Manifesto</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.manifesto">Manifesto</span></span></a>
+            <a class="nav-item" href="index.html#servicos" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.services">Serviços</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.services">Serviços</span></span></a>
+            <a class="nav-item" href="index.html#mundo" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.world">Mundo</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.world">Mundo</span></span></a>
+            <a class="nav-item" href="index.html#contato" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.contact">Contato</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.contact">Contato</span></span></a>
+          </nav>
+          <a class="header_logo" href="index.html" aria-label="Aurora, voltar ao início" data-i18n-attr="aria-label:a11y.home">
+            <svg viewBox="0 0 750 80" aria-hidden="true"><use href="#i-wordmark"/></svg>
+          </a>
+          <div class="header_right">
+            <button class="lang-toggle t6" type="button" data-lang-toggle aria-label="Mudar idioma para inglês">
+              <span data-lang="pt">PT</span><span class="lang-toggle_sep">/</span><span data-lang="en">EN</span>
+            </button>
+            <a class="nav-item nav-item--solid" href="index.html#contato" data-nav-hover><span class="nav-item_bg_hover" aria-hidden="true"></span><span class="nav-item_texts"><span class="nav-item_text t6" data-i18n="nav.talk">Fale conosco</span><span class="nav-item_text is-2 t6" aria-hidden="true" data-i18n="nav.talk">Fale conosco</span></span></a>
+            <a class="header_menu header_menu--back" href="index.html" aria-label="Voltar ao início" data-i18n-attr="aria-label:legal.back">
+              <svg aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main id="conteudo" class="legal theme_on-light" data-bg="light">
+        <div class="noise"></div>
+        <div class="container">
+          <div class="legal_head">
+            <p class="l1 label" data-char-reveal data-i18n="legal.label">Jurídico</p>
+            <div class="unit-24"></div>
+            <h1 class="h2 legal_title" data-line-reveal data-i18n="legal.title">Privacidade, aviso e termos.</h1>
+            <div class="unit-24"></div>
+            <p class="p7 legal_updated" data-i18n="legal.updated">Última atualização: 30 de setembro de 2026.</p>
+          </div>
+          <div class="unit-96"></div>
+
+          <div class="legal_grid">
+            <nav class="legal_toc" aria-labelledby="toc-title">
+              <p class="l1 label" id="toc-title" data-i18n="legal.toc">Nesta página</p>
+              <ul class="p6">
+                <li><a href="#privacidade" data-i18n="legal.p.h">Política de Privacidade</a></li>
+                <li><a href="#cookies" data-i18n="legal.c.h">Cookies</a></li>
+                <li><a href="#aviso-legal" data-i18n="legal.n.h">Aviso Legal</a></li>
+                <li><a href="#termos" data-i18n="legal.t.h">Termos de uso</a></li>
+              </ul>
+            </nav>
+
+            <div class="legal_body">
+              <section id="privacidade" class="legal_sec" aria-labelledby="h-priv">
+                <h2 class="h4" id="h-priv" data-i18n="legal.p.h">Política de Privacidade</h2>
+                <p class="p6" data-i18n="legal.p.1">A Aurora ("nós") respeita a sua privacidade e segue a Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018). Esta política explica quais dados coletamos, por quê, e como você pode exercer seus direitos.</p>
+                <h3 class="t6" data-i18n="legal.p.2h">O que coletamos</h3>
+                <p class="p6" data-i18n="legal.p.2">Apenas o que você digita nos formulários: nome, e-mail, país, telefone, empresa, investimento previsto e a mensagem sobre o projeto. Não coletamos dados sensíveis.</p>
+                <h3 class="t6" data-i18n="legal.p.3h">Finalidade e base legal</h3>
+                <p class="p6" data-i18n="legal.p.3">Usamos seus dados somente para responder ao seu contato e enviar uma proposta (base legal: consentimento e procedimentos preliminares a contrato, art. 7º, I e V da LGPD). Nunca vendemos nem compartilhamos seus dados para marketing.</p>
+                <h3 class="t6" data-i18n="legal.p.4h">Guarda e segurança</h3>
+                <p class="p6" data-i18n="legal.p.4">Guardamos os dados por até 24 meses após o último contato, ou até você pedir a exclusão, com conexão criptografada (HTTPS) e acesso restrito.</p>
+                <h3 class="t6" data-i18n="legal.p.5h">Seus direitos</h3>
+                <p class="p6" data-i18n="legal.p.5">Você pode pedir acesso, correção, portabilidade, anonimização ou exclusão dos seus dados, e revogar o consentimento a qualquer momento, escrevendo para contato@aurora.example. Respondemos em até 15 dias.</p>
+              </section>
+
+              <section id="cookies" class="legal_sec" aria-labelledby="h-cook">
+                <h2 class="h4" id="h-cook" data-i18n="legal.c.h">Cookies</h2>
+                <p class="p6" data-i18n="legal.c.1">O site funciona sem cookies. Cookies de medição (Google Analytics 4, com IP anonimizado) só são carregados depois que você clica em "Aceitar" no banner. Você pode mudar sua escolha a qualquer momento no botão abaixo.</p>
+                <button class="btn btn--dark" type="button" data-cookie-open data-btn-hover>
+                  <span class="btn_hover" aria-hidden="true"></span>
+                  <span class="btn_texts"><span class="btn_text l1" data-i18n="legal.c.btn">Alterar preferências de cookies</span><span class="btn_text is-2 l1" aria-hidden="true" data-i18n="legal.c.btn">Alterar preferências de cookies</span></span>
+                </button>
+              </section>
+
+              <section id="aviso-legal" class="legal_sec" aria-labelledby="h-aviso">
+                <h2 class="h4" id="h-aviso" data-i18n="legal.n.h">Aviso Legal</h2>
+                <p class="p6" data-i18n="legal.n.1">Este site pertence à Aurora. Textos, marca e layout são protegidos por direitos autorais. As fotos espaciais são da NASA, de domínio público, e têm uso apenas ilustrativo; a NASA não endossa a Aurora nem seus serviços.</p>
+              </section>
+
+              <section id="termos" class="legal_sec" aria-labelledby="h-termos">
+                <h2 class="h4" id="h-termos" data-i18n="legal.t.h">Termos de uso</h2>
+                <p class="p6" data-i18n="legal.t.1">Ao usar este site, você concorda em usá-lo de forma lícita e em não tentar interferir no seu funcionamento. O conteúdo é informativo e pode mudar sem aviso. Eventuais conflitos seguem a lei brasileira, no foro de São Paulo/SP.</p>
+              </section>
+            </div>
+          </div>
+          <div class="unit-156"></div>
+        </div>
+      </main>
+
+      <footer class="footer footer--compact theme_on-light" data-bg="light">
+        <div class="container">
+          <svg class="footer_wordmark" viewBox="0 0 750 80" aria-hidden="true"><use href="#i-wordmark"/></svg>
+          <div class="unit-36"></div>
+          <div class="footer_bot p7">
+            <p>© <span data-year>2026</span> Aurora. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <nav class="footer_legal" aria-label="Links legais" data-i18n-attr="aria-label:a11y.legal">
+              <a href="#privacidade" data-i18n="legal.privacy">Política de Privacidade</a><span aria-hidden="true">|</span>
+              <a href="#aviso-legal" data-i18n="legal.notice">Aviso Legal</a><span aria-hidden="true">|</span>
+              <a href="#termos" data-i18n="legal.terms">Termos</a>
+            </nav>
+            <p data-i18n="footer.nasa">Fotos: NASA (domínio público).</p>
+          </div>
+          <div class="unit-36"></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="cookie" data-cookie role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <p class="cookie_title t6" id="cookie-title" data-i18n="cookie.title">Cookies, só com a sua permissão</p>
+    <p class="cookie_p p7" data-i18n-html data-i18n="cookie.p">Usamos cookies de medição (Google Analytics) apenas se você aceitar. Saiba mais na <a href="privacidade.html#cookies">Política de Privacidade</a>.</p>
+    <div class="cookie_btns">
+      <button type="button" class="cookie_btn" data-cookie-choice="deny" data-i18n="cookie.deny">Recusar</button>
+      <button type="button" class="cookie_btn is-accept" data-cookie-choice="accept" data-i18n="cookie.accept">Aceitar</button>
+    </div>
+  </div>
+</body>
+</html>

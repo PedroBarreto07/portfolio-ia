@@ -1,0 +1,21 @@
+{
+  "name": "aurora-site",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Site institucional one-page: viagem do espaço à Terra guiada pelo scroll (GSAP, ScrollTrigger, Lenis, Barba.js, particles.js)",
+  "scripts": {
+    "postinstall": "node scripts/copiar-libs.js",
+    "start": "serve -l 8000 .",
+    "imagens": "node scripts/gerar-imagens.js"
+  },
+  "dependencies": {
+    "@barba/core": "^2.10.3",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26",
+    "particles.js": "^2.0.0"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4",
+    "sharp": "^0.34.5"
+  }
+}
