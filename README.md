@@ -5,6 +5,7 @@ Coleção de projetos web feitos com o Claude Code. Cada projeto fica em uma pas
 | Projeto | O que é | Ver |
 |---|---|---|
 | [`aurora-site/`](aurora-site/) | Site institucional de agência digital: uma viagem do espaço à Terra guiada pelo scroll (GSAP, ScrollTrigger, Lenis, Barba.js, particles.js e fotos da NASA). | [Documentação](aurora-site/LEIAME.md) |
+| [`nexora-site/`](nexora-site/) | Experiência WebGL imersiva guiada pelo scroll, da órbita ao asfalto: Terra e satélite com dados da NASA, data center, chip quântico, cards de IA e carro PBR nos Alpes (Three.js, GSAP, Vite, áudio sintetizado). | [Documentação](nexora-site/README.md) |
 
 ## Rodar um projeto localmente
 
@@ -14,7 +15,9 @@ npm install
 npm start        # http://localhost:8000
 ```
 
-Sem Node.js, use `python -m http.server 8000` dentro da pasta do projeto.
+O `nexora-site` usa Vite: `cd nexora-site && npm install && npm run dev` (http://localhost:5173).
+
+Sem Node.js (no aurora-site), use `python -m http.server 8000` dentro da pasta do projeto.
 
 ## GitHub Pages
 

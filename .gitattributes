@@ -3,3 +3,6 @@
 *.avif binary
 *.png binary
 *.jpg binary
+*.glb binary
+*.hdr binary
+*.wasm binary

@@ -1,0 +1,28 @@
+{
+  "name": "nexora-experience",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Experiência 3D imersiva guiada por scroll — Inteligência em escala planetária",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "postinstall": "node scripts/copy-decoders.mjs",
+    "test:smoke": "node scripts/smoke.mjs",
+    "test:errors": "node scripts/errors.mjs",
+    "shots": "node scripts/shots.mjs",
+    "og-image": "node scripts/og-image.mjs",
+    "assets:fetch": "node scripts/fetch-assets.mjs",
+    "assets:process": "node scripts/process-assets.mjs",
+    "assets": "node scripts/fetch-assets.mjs && node scripts/process-assets.mjs"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.43.1",
+    "vite": "^6.4.3"
+  }
+}
