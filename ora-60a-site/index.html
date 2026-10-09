@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>ORA 60A — The timeless automatic watch</title>
+    <meta name="description" content="ORA 60A: a 42 mm automatic tourbillon with moon phase and 60-hour power reserve. Explore the watch in real-time 3D — every finish, every part." />
+    <meta name="theme-color" content="#e3e3e3" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://example.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ORA 60A — The timeless automatic watch" />
+    <meta property="og:description" content="A 42 mm automatic tourbillon, explored in real-time 3D." />
+    <meta property="og:image" content="/share-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ORA 60A — The timeless automatic watch" />
+    <meta name="twitter:description" content="A 42 mm automatic tourbillon, explored in real-time 3D." />
+    <meta name="twitter:image" content="/share-image.jpg" />
+
+    <style>
+      /* critical: loader paints before any JS/CSS bundle */
+      html, body { margin: 0; background: #e3e3e3; }
+      #loader { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 45%, #ececec 0%, #d9d9d9 70%, #cfcfcf 100%); transition: opacity 1s linear, visibility 0s linear 1s; font-family: system-ui, sans-serif; }
+      #loader.is-done { opacity: 0; visibility: hidden; }
+      #loader svg { position: absolute; width: min(70vh, 80vw); height: min(70vh, 80vw); }
+      #loader .progress-arc { transition: stroke-dashoffset .6s cubic-bezier(.14,1,.34,1); }
+      #loader .loader-label { position: relative; display: flex; gap: 14px; align-items: baseline; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #2b2b2b; }
+      #loader .loader-label span:last-child { color: #919191; font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="loader" aria-live="polite">
+        <svg viewBox="0 0 700 700" aria-hidden="true">
+          <circle cx="350" cy="350" r="330" fill="none" stroke="#DCDCDC" stroke-width="1" />
+          <circle class="progress-arc" cx="350" cy="350" r="330" fill="none" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round" stroke-dasharray="2073.45" stroke-dashoffset="2073.45" transform="rotate(-90 350 350)" />
+        </svg>
+        <div class="loader-label"><span>Loading</span><span class="loader-value">000</span></div>
+      </div>
+      <div id="canvas-wrapper"></div>
+      <div id="root"></div>
+    </div>
+    <noscript>
+      <p style="padding: 40px; font-family: system-ui">ORA 60A — this experience needs JavaScript and WebGL.</p>
+    </noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

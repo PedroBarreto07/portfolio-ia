@@ -1,0 +1,251 @@
+/* ------------------------------------------------------------------ tokens */
+:root {
+  --vh: 1vh;
+  --first-color: #2b2b2b;
+  --black: #000;
+  --grey: #919191;
+  --grey-2: #a1a1a1;
+  --grey-3: #c9c9c9;
+  --line: rgba(0, 0, 0, 0.3);
+  --line-2: #66666680;
+  --line-fade: linear-gradient(90deg, #a1a1a100, #a1a1a14d 20%, #a1a1a14d 80%, #a1a1a100);
+  --white: #fff;
+  --ink: var(--first-color);
+  --ink-2: var(--grey);
+  --font-display: 'Unbounded', 'Syne', sans-serif;
+  --font-text: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  --font-serif: 'EB Garamond', 'Times New Roman', serif;
+  --ease-expo: cubic-bezier(0.14, 1, 0.34, 1);
+  --ease-pos-in: cubic-bezier(0.4, 0, 0.1, 1);
+  --gutter: 24rem;
+  color-scheme: light;
+}
+
+/*
+ * Fluid rem: 1rem = 1 design pixel of the Figma frame at each breakpoint
+ * (320 / 768 / 1024 / 1440 / 1600). Write every size in rem = px.
+ */
+html {
+  font-size: 0.3125vw;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 0.1302083333vw;
+  }
+}
+@media (min-width: 1025px) {
+  html {
+    font-size: 0.09765625vw;
+  }
+}
+@media (min-width: 1441px) {
+  html {
+    font-size: 0.0694444444vw;
+  }
+}
+@media (min-width: 1600px) {
+  html {
+    font-size: 0.0625vw;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --gutter: 16rem;
+  }
+}
+
+/* ------------------------------------------------------------------- base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #e3e3e3;
+  color: var(--ink);
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: var(--font-text);
+  font-size: 12rem;
+  line-height: 1.55;
+  font-weight: 400;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  font-weight: 400;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+::selection {
+  background: #2b2b2b;
+  color: #fff;
+}
+:focus-visible {
+  outline: 1.5px solid currentColor;
+  outline-offset: 4px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- layers */
+#app {
+  position: relative;
+}
+#canvas-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  touch-action: pan-y;
+}
+#canvas-wrapper canvas {
+  display: block;
+}
+#root {
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+}
+#root a,
+#root button,
+#root [data-interactive] {
+  pointer-events: auto;
+}
+html.is-dark {
+  --ink: #fff;
+  --ink-2: #8a8a8a;
+  --line: rgba(255, 255, 255, 0.3);
+}
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+/* ------------------------------------------------------------ typography */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.86;
+}
+.eyebrow {
+  font-family: var(--font-text);
+  font-size: 10rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.label {
+  font-size: 10rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.value {
+  font-size: 12rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.body-s {
+  font-size: 11rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 260rem;
+}
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* split text */
+.st-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.st-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.char-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.st-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* -------------------------------------------------------------- utilities */
+.hide-mobile {
+}
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hide-tablet {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .only-mobile {
+    display: none !important;
+  }
+}
+html.is-reduced *,
+html.is-reduced *::before,
+html.is-reduced *::after {
+  transition-duration: 0.01ms !important;
+}

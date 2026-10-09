@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .ink { stroke: #1e1e1e; }
+    @media (prefers-color-scheme: dark) { .ink { stroke: #f2f2f2; } }
+  </style>
+  <circle class="ink" cx="32" cy="32" r="26" fill="none" stroke-width="3"/>
+  <circle class="ink" cx="32" cy="32" r="19" fill="none" stroke-width="1" opacity=".5"/>
+  <path class="ink" d="M32 32V15M32 32l11 7" fill="none" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="45.5" r="4" fill="#c9a86a"/>
+</svg>
