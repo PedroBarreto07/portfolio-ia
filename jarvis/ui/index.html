@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J.A.R.V.I.S.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-estado="iniciando">
+  <div class="fundo" aria-hidden="true"></div>
+
+  <header class="topo">
+    <div class="marca">
+      <span class="marca-nome">J.A.R.V.I.S.</span>
+      <span class="marca-sub">assistente pessoal · v1.0</span>
+    </div>
+    <ul class="modulos" id="modulos"></ul>
+    <div class="relogio">
+      <span id="hora">--:--</span>
+      <span id="data">carregando</span>
+    </div>
+  </header>
+
+  <main class="painel">
+    <aside class="lateral esquerda">
+      <section class="bloco">
+        <h2>Sistema</h2>
+        <div class="medidor" data-chave="cpu"><span>CPU</span><div class="barra"><i></i></div><b>--</b></div>
+        <div class="medidor" data-chave="ram"><span>Memória</span><div class="barra"><i></i></div><b>--</b></div>
+        <div class="medidor" data-chave="disco"><span>Disco</span><div class="barra"><i></i></div><b>--</b></div>
+        <div class="medidor" data-chave="bateria"><span>Bateria</span><div class="barra"><i></i></div><b>--</b></div>
+      </section>
+      <section class="bloco">
+        <h2>Comandos rápidos</h2>
+        <div class="atalhos">
+          <button data-cmd="Faça meu briefing do dia">Briefing do dia</button>
+          <button data-cmd="Como está o clima?">Clima</button>
+          <button data-cmd="O que tenho na agenda hoje?">Agenda de hoje</button>
+          <button data-cmd="Tenho e-mails não lidos?">E-mails</button>
+          <button data-cmd="Quais as principais notícias?">Notícias</button>
+          <button data-cmd="Como está o sistema?">Status do PC</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="centro">
+      <div class="nucleo">
+        <canvas id="anel" aria-hidden="true"></canvas>
+        <div class="nucleo-texto">
+          <span class="nucleo-nome">JARVIS</span>
+          <span class="nucleo-estado" id="estado-rotulo">iniciando</span>
+        </div>
+      </div>
+      <div class="ferramenta" id="ferramenta" aria-live="polite"></div>
+      <p class="legenda" id="legenda" aria-live="polite"></p>
+    </section>
+
+    <aside class="lateral direita">
+      <section class="bloco registro-bloco">
+        <h2>Registro <button class="mini" id="btn-esquecer" title="Apagar memória da conversa">limpar</button></h2>
+        <ol class="registro" id="registro"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="rodape">
+    <button class="redondo" id="btn-mic" title="Falar (F2)" aria-label="Falar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg>
+    </button>
+    <form id="form" class="entrada" autocomplete="off">
+      <input id="texto" type="text" placeholder="Digite um comando ou diga “Hey Jarvis”…" aria-label="Comando">
+      <button type="submit" class="enviar">Enviar</button>
+    </form>
+    <button class="redondo" id="btn-silenciar" title="Interromper fala (Esc)" aria-label="Interromper fala">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg>
+    </button>
+  </footer>
+
+  <script src="hud.js"></script>
+</body>
+</html>

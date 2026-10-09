@@ -1,0 +1,11 @@
+# Segredos — NUNCA subir para o GitHub
+.env
+credentials.json
+token.json
+.spotify_cache
+apps.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
