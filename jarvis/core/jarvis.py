@@ -140,6 +140,12 @@ class Jarvis:
         t = CFG.TRATAMENTO
         if "Authentication" in nome:
             return f"Minha chave de acesso foi recusada, {t}. Verifique a ANTHROPIC_API_KEY no arquivo .env."
+        if "credit balance" in str(erro).lower():
+            return f"Estou sem créditos na API, {t}. Adicione créditos em Plans and Billing no console da Anthropic."
+        if "PermissionDenied" in nome:
+            return f"Minha chave não tem permissão para usar a API, {t}. Crie uma chave com o escopo de uso da API."
+        if "NotFound" in nome:
+            return f"O modelo {CFG.MODELO} não está disponível para esta conta, {t}. Troque o JARVIS_MODELO no arquivo .env."
         if "Connection" in nome or "Timeout" in nome:
             return f"Perdi a conexão com meus servidores, {t}. Verifique a internet."
         if "RateLimit" in nome or "Overloaded" in nome:
