@@ -1,0 +1,10 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.testing.unittestEnabled": true,
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestArgs": ["-v", "-s", "./testes", "-t", ".", "-p", "test_*.py"],
+  "files.exclude": { "**/__pycache__": true },
+  "[bat]": { "files.eol": "\r\n" },
+  "files.associations": { ".env.example": "properties", ".env": "properties" }
+}

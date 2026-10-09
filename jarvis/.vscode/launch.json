@@ -1,0 +1,59 @@
+{
+  // F5 roda a opção selecionada no painel "Executar e depurar" (Ctrl+Shift+D)
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Jarvis: completo (janela + voz + microfone)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Jarvis: console (digitando, com voz)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": ["--console"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Jarvis: console sem voz (teste mais rápido)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": ["--console", "--sem-voz"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Jarvis: janela sem microfone",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": ["--sem-microfone"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Jarvis: depurar ativação (mostra o que ouviu)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": { "DEBUG": "true" }
+    },
+    {
+      "name": "Diagnóstico",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/diagnostico.py",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}

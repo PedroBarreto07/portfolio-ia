@@ -125,7 +125,7 @@ class Jarvis:
 
             if self.ouvidos and self.fila.empty():
                 if CFG.CONTINUAR_SE_PERGUNTA and resposta.rstrip().endswith("?"):
-                    self.ouvidos.escutar_agora()   # resposta sem precisar do "Hey Jarvis"
+                    self.ouvidos.escutar_agora()   # resposta sem precisar dizer "Jarvis"
                 self.ouvidos.pausado = False
 
     def _falar(self, texto):

@@ -36,8 +36,12 @@ class CFG:
 
     # Ouvidos
     WHISPER_MODELO = os.getenv("WHISPER_MODELO", "small")
-    WAKE_WORD = os.getenv("WAKE_WORD", "hey_jarvis")
-    WAKE_LIMIAR = _float("WAKE_LIMIAR", 0.5)
+    # Palavra de ativação: "whisper" (diga só "Jarvis") ou "openwakeword" ("Hey Jarvis")
+    WAKE_MOTOR = os.getenv("WAKE_MOTOR", "whisper").strip().lower()
+    WAKE_PALAVRA = os.getenv("WAKE_PALAVRA", "jarvis").strip() or "jarvis"
+    WAKE_WHISPER_MODELO = os.getenv("WAKE_WHISPER_MODELO", "base")
+    WAKE_WORD = os.getenv("WAKE_WORD", "hey_jarvis")    # só no motor openwakeword
+    WAKE_LIMIAR = _float("WAKE_LIMIAR", 0.5)            # só no motor openwakeword
     MIC_LIMIAR_MIN = _float("MIC_LIMIAR_MIN", 400)
     MIC_DISPOSITIVO = os.getenv("MIC_DISPOSITIVO", "").strip() or None  # índice ou nome
 

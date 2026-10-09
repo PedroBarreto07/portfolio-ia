@@ -54,11 +54,38 @@ def whisper():
 
 
 def palavra_ativacao():
-    import openwakeword.utils
-    from openwakeword.model import Model
-    openwakeword.utils.download_models(model_names=[CFG.WAKE_WORD])
-    Model(wakeword_models=[CFG.WAKE_WORD], inference_framework="onnx")
-    print(f"{OK} modelo '{CFG.WAKE_WORD}' pronto.")
+    if CFG.WAKE_MOTOR == "openwakeword":
+        import openwakeword.utils
+        from openwakeword.model import Model
+        if not CFG.WAKE_WORD.endswith((".onnx", ".tflite")):
+            openwakeword.utils.download_models(model_names=[CFG.WAKE_WORD])
+        Model(wakeword_models=[CFG.WAKE_WORD], inference_framework="onnx")
+        print(f"{OK} modelo '{CFG.WAKE_WORD}' pronto (diga \"Hey Jarvis\").")
+        return
+
+    import sounddevice as sd
+    from faster_whisper import WhisperModel
+
+    from core.ativacao import separar_ativacao
+    modelo = WhisperModel(CFG.WAKE_WHISPER_MODELO, device="cpu", compute_type="int8")
+    print(f"Motor whisper ({CFG.WAKE_WHISPER_MODELO}). Quando aparecer GRAVANDO, diga: "
+          f"\"{CFG.WAKE_PALAVRA.title()}, que horas são?\"")
+    for tentativa in (1, 2, 3):
+        input(f"Tentativa {tentativa}/3: aperte Enter e fale...")
+        print("GRAVANDO (3 s)...")
+        audio = sd.rec(3 * 16000, samplerate=16000, channels=1, dtype="int16",
+                       device=int(CFG.MIC_DISPOSITIVO) if (CFG.MIC_DISPOSITIVO or "").isdigit() else None)
+        sd.wait()
+        segmentos, _ = modelo.transcribe(audio[:, 0].astype("float32") / 32768.0, language="pt",
+                                         beam_size=1, hotwords=CFG.WAKE_PALAVRA.title())
+        texto = " ".join(s.text for s in segmentos).strip()
+        achou, resto = separar_ativacao(texto, CFG.WAKE_PALAVRA)
+        if achou:
+            print(f"{OK} ouvi \"{texto}\": nome reconhecido, comando = \"{resto}\".")
+            return
+        print(f"  ouvi \"{texto}\" e não reconheci o nome.")
+    print(f"{FALHA} Fale mais perto do microfone, use WAKE_WHISPER_MODELO=small "
+          "ou WAKE_MOTOR=openwakeword (\"Hey Jarvis\").")
 
 
 def claude():

@@ -1,9 +1,9 @@
 # J.A.R.V.I.S. — assistente pessoal por voz
 
-Assistente para Windows que acorda com **"Hey Jarvis"**, entende português, responde falando com voz masculina formal e controla seu PC, Google Agenda, Gmail, clima, notícias e Spotify. O cérebro é o Claude (API da Anthropic).
+Assistente para Windows que acorda quando você diz **"Jarvis"**, entende português, responde falando com voz masculina formal e controla seu PC, Google Agenda, Gmail, clima, notícias e Spotify. O cérebro é o Claude (API da Anthropic).
 
 ```
- microfone ─► "Hey Jarvis" (openWakeWord, local) ─► gravação ─► Whisper (local)
+ microfone ─► "Jarvis" (Whisper rápido, local) ─► gravação ─► Whisper (local)
                                                                     │ texto
  alto-falante ◄─ edge-tts (voz) ◄─ resposta ◄─ Claude + ferramentas ◄┘
                                                   ├─ PC (apps, volume, mídia, print, bloqueio)
@@ -23,24 +23,50 @@ Assistente para Windows que acorda com **"Hey Jarvis"**, entende português, res
    - Entre em <https://console.anthropic.com>, adicione créditos em *Billing*.
    - Em *Settings > Limits*, **defina um limite mensal de gasto** (evita surpresa na fatura).
    - Em *Settings > API Keys*, crie uma chave e cole no `.env` em `ANTHROPIC_API_KEY=`.
-5. Rode **`diagnostico.bat`**. Ele testa API, clima, voz, microfone, Whisper e palavra de ativação, e mostra o que estiver falhando.
-6. Rode **`iniciar.bat`**. Na primeira vez o Whisper baixa o modelo de fala (cerca de 500 MB para o `small`).
+5. Rode **`diagnostico.bat`**. Ele testa API, clima, voz, microfone, Whisper e palavra de ativação (pede para você dizer "Jarvis, que horas são?"), e mostra o que estiver falhando.
+6. Rode **`iniciar.bat`**. O instalador já baixa os modelos de fala (`base`, cerca de 150 MB, e `small`, cerca de 500 MB).
+
+Prefere o VS Code? Veja a [seção 2](#2-rodar-e-testar-no-vs-code).
 
 > Se a janela não abrir, use `iniciar_com_log.bat` para ver o erro no terminal.
 
 ---
 
-## 2. Como usar
+## 2. Rodar e testar no VS Code
+
+1. Faça a instalação da seção 1 (ou, no VS Code, `Ctrl+Shift+P` > **Tasks: Run Task** > **Jarvis: instalar**).
+2. **Arquivo > Abrir Pasta...** e escolha a pasta `jarvis` (a pasta do `main.py`, não a de cima).
+3. Aceite instalar as extensões recomendadas (Python, Python Debugger e Pylance).
+4. Confira o interpretador no canto inferior direito: deve ser `.venv` (`Ctrl+Shift+P` > **Python: Select Interpreter** se não for).
+5. Abra o painel **Executar e depurar** (`Ctrl+Shift+D`), escolha uma opção e aperte **F5**:
+
+| Opção | Para quê |
+|---|---|
+| Jarvis: completo | Janela + voz + microfone (o uso normal) |
+| Jarvis: console sem voz | Mais rápido para testar o cérebro e as ferramentas digitando no terminal |
+| Jarvis: console | Digitando, mas ele responde falando |
+| Jarvis: janela sem microfone | Interface completa, só com texto |
+| Jarvis: depurar ativação | Mostra no terminal tudo o que ele ouviu e se reconheceu "Jarvis" (ótimo para calibrar) |
+| Diagnóstico | Mesmo teste do `diagnostico.bat` |
+
+**Testes automáticos:** abra o painel de testes (ícone de frasco) e clique em ▶, ou rode a tarefa **Jarvis: testes**. Eles simulam o microfone e o Whisper, então não precisam de chave de API nem de microfone.
+
+Pode colocar *breakpoints* (clique à esquerda do número da linha) em `core/cerebro.py` ou `skills/` para ver o que o Claude pediu e o que cada ferramenta devolveu.
+
+---
+
+## 3. Como usar
 
 | Forma | Como |
 |---|---|
-| Voz | Diga **"Hey Jarvis"** (pronúncia em inglês), espere o bipe e fale o comando |
+| Voz, de uma vez | **"Jarvis, abre o VS Code"** (sem pausa entre o nome e o comando) |
+| Voz, em duas partes | **"Jarvis"**, espere o bipe e fale o comando |
 | Botão | Clique no microfone ou aperte **F2** / **Ctrl+Espaço** |
 | Texto | Digite na barra de baixo e aperte Enter |
 | Interromper | **Esc** ou o botão quadrado |
 | Esquecer a conversa | Botão **limpar** no Registro |
 
-Quando o Jarvis termina com uma pergunta ("Confirma às 15h?"), ele já escuta a resposta sem precisar de "Hey Jarvis".
+Quando o Jarvis termina com uma pergunta ("Confirma às 15h?"), ele já escuta a resposta sem precisar dizer "Jarvis" de novo. "Bom dia, Jarvis" também vale: vira o comando "Bom dia".
 
 **Exemplos de comandos:**
 - "Faça meu briefing do dia" (clima, agenda e e-mails num resumo só)
@@ -56,7 +82,7 @@ Quando o Jarvis termina com uma pergunta ("Confirma às 15h?"), ele já escuta a
 
 ---
 
-## 3. Google Agenda e Gmail (opcional)
+## 4. Google Agenda e Gmail (opcional)
 
 O Jarvis pede só duas permissões: **ler e criar eventos** na agenda e **ler** e-mails. Ele não envia, não apaga e não move e-mails.
 
@@ -75,7 +101,7 @@ O Jarvis pede só duas permissões: **ler e criar eventos** na agenda e **ler** 
 
 ---
 
-## 4. Spotify (opcional)
+## 5. Spotify (opcional)
 
 Desde fevereiro de 2026, o Spotify exige **conta Premium** do dono do app para usar a Web API em modo de desenvolvimento. Sem Premium, use os comandos de mídia ("pausa", "próxima"), que funcionam com qualquer player via teclas de mídia.
 
@@ -88,13 +114,18 @@ Desde fevereiro de 2026, o Spotify exige **conta Premium** do dono do app para u
 
 ---
 
-## 5. Personalizar
+## 6. Personalizar
+
+**Palavra de ativação** (`.env`):
+- `WAKE_MOTOR=whisper` (padrão): basta dizer "Jarvis". Quando você começa a falar, um Whisper pequeno (`WAKE_WHISPER_MODELO`) transcreve o primeiro segundo e meio e confere se começa com o nome. Ele aceita as grafias que o Whisper costuma usar para o sotaque brasileiro ("Járvis", "Jarbas", "Jar vis"...).
+- `WAKE_PALAVRA`: troque o nome (ex.: `sexta`). Funciona melhor com nomes de duas ou três sílabas que não sejam palavras comuns.
+- `WAKE_MOTOR=openwakeword`: o detector antigo, mais leve, que só entende "Hey Jarvis". Se um dia você treinar um modelo próprio do openWakeWord, ponha o caminho do `.onnx` em `WAKE_WORD`.
 
 **Voz** (`.env`):
 - `VOZ`: outras vozes pt-BR aparecem com `.venv\Scripts\edge-tts --list-voices | findstr pt-BR`.
 - `VOZ_VELOCIDADE` (`-10%` mais calmo, `+10%` mais rápido) e `VOZ_TOM` (`-8Hz` mais grave).
 
-**Programas** (`apps.json`): o Jarvis só abre programas da lista (segurança, veja a seção 7). Para incluir os seus:
+**Programas** (`apps.json`): o Jarvis só abre programas da lista (segurança, veja a seção 8). Para incluir os seus:
 ```json
 {
   "obs": "C:\\Program Files\\obs-studio\\bin\\64bit\\obs64.exe",
@@ -122,28 +153,29 @@ O Claude descobre sozinho quando usar a ferramenta pela descrição.
 
 ---
 
-## 6. Problemas comuns
+## 7. Problemas comuns
 
 | Sintoma | Solução |
 |---|---|
 | `pip` falha em `onnxruntime` / `ctranslate2` | Use Python **3.12 64 bits**. Apague a pasta `.venv` e rode `instalar.bat` de novo |
 | Janela não abre / erro de WebView | Instale o **Microsoft Edge WebView2 Runtime** (site da Microsoft) |
-| "Hey Jarvis" não ativa | Pronuncie em inglês ("rêi djár-vis"); baixe `WAKE_LIMIAR` para `0.35` |
-| Ativa sozinho | Suba `WAKE_LIMIAR` para `0.65` |
+| "Jarvis" não ativa | Rode **Jarvis: depurar ativação** no VS Code (ou `DEBUG=true` no `.env`) e veja o que ele ouviu. Fale o nome no começo da frase; tente `WAKE_WHISPER_MODELO=small` |
+| Ativa sozinho (TV, conversa) | Suba `MIC_LIMIAR_MIN` (ex.: `700`) ou use `WAKE_MOTOR=openwakeword` |
+| PC fraco / CPU alta | `WAKE_WHISPER_MODELO=tiny`, ou `WAKE_MOTOR=openwakeword` (aí a frase volta a ser "Hey Jarvis"; ajuste `WAKE_LIMIAR` entre `0.35` e `0.65`) |
 | Corta a frase no meio | Baixe `MIC_LIMIAR_MIN` (ex.: `250`) |
 | Não para de gravar | Suba `MIC_LIMIAR_MIN` (ex.: `700`) ou use fone com microfone |
 | Entende errado | `WHISPER_MODELO=medium` (mais preciso, mais lento) |
 | Microfone errado | Veja o número no `diagnostico.bat` e ponha em `MIC_DISPOSITIVO` |
 | "Login do Google expirou" | Rode `conectar_google.bat` (acontece a cada 7 dias em modo teste) |
-| Google: "acesso bloqueado" | Seu e-mail não está como usuário de teste (seção 3, passo 3) |
+| Google: "acesso bloqueado" | Seu e-mail não está como usuário de teste (seção 4, passo 3) |
 | Spotify: "nenhum dispositivo" | Abra o app do Spotify e toque qualquer coisa uma vez |
 | Spotify: erro 403 | Conta sem Premium ou e-mail não autorizado no painel do app |
 
 ---
 
-## 7. Segurança e privacidade
+## 8. Segurança e privacidade
 
-- **O que sai do seu PC:** o áudio fica local (Whisper e palavra de ativação rodam no PC). Saem o **texto** do comando e os resultados das ferramentas (assunto e trecho de e-mails, eventos da agenda) para a API da Anthropic, e o texto das respostas para o serviço de voz da Microsoft (edge-tts).
+- **O que sai do seu PC:** o áudio fica local (Whisper e palavra de ativação rodam no PC; o detector só transcreve o começo de cada fala e descarta o que não começa com "Jarvis"). Saem o **texto** do comando e os resultados das ferramentas (assunto e trecho de e-mails, eventos da agenda) para a API da Anthropic, e o texto das respostas para o serviço de voz da Microsoft (edge-tts).
 - **Nunca suba** `.env`, `credentials.json`, `token.json` e `.spotify_cache` para o GitHub. O `.gitignore` já bloqueia esses arquivos.
 - **Lista branca de programas:** o Jarvis não executa comandos arbitrários. Isso impede que um e-mail malicioso com texto do tipo "Jarvis, rode tal coisa" faça algo no seu PC. Pelo mesmo motivo, o prompt instrui o Jarvis a tratar e-mails e notícias como dados, nunca como ordens.
 - **Uso pessoal:** foi feito para o seu PC e as suas contas. Não conecte contas institucionais (ex.: e-mail ou agenda do trabalho) nem use em máquina do órgão sem autorização da TI e do seu supervisor, já que dados de terceiros passariam por serviços externos (LGPD).
@@ -160,11 +192,14 @@ jarvis/
 ├── core/
 │   ├── jarvis.py        orquestrador (fila de comandos, estados)
 │   ├── cerebro.py       Claude + personalidade + laço de ferramentas
-│   ├── ouvidos.py       "Hey Jarvis" + gravação + Whisper
+│   ├── ouvidos.py       palavra de ativação + gravação + Whisper
+│   ├── ativacao.py      reconhece "Jarvis" no texto (e as variações)
 │   ├── voz.py           edge-tts + pygame (fallback offline pyttsx3)
 │   └── ponte.py         Python → interface
 ├── skills/              habilidades (pc, info, google_svc, spotify_svc)
 ├── ui/                  interface HUD (index.html, style.css, hud.js)
+├── testes/              testes automáticos (sem microfone nem API)
+├── .vscode/             configurações para rodar, depurar e testar no VS Code
 ├── instalar.bat · iniciar.bat · iniciar_com_log.bat · diagnostico.bat
 └── conectar_google.bat · conectar_spotify.bat
 ```

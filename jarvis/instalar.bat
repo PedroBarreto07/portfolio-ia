@@ -21,7 +21,8 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo Baixando modelo da palavra de ativacao...
+echo Baixando modelos de fala (pode demorar na primeira vez)...
+python -c "from faster_whisper import WhisperModel as W; W('base', device='cpu', compute_type='int8'); W('small', device='cpu', compute_type='int8')"
 python -c "import openwakeword.utils as u; u.download_models(model_names=['hey_jarvis'])"
 if not exist .env copy .env.example .env >nul
 if not exist apps.json copy apps.json.example apps.json >nul
