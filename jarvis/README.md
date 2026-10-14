@@ -1,6 +1,6 @@
 # J.A.R.V.I.S. — assistente pessoal por voz
 
-Assistente para Windows que acorda quando você diz **"Jarvis"**, entende português, responde falando com voz masculina formal e controla seu PC, Google Agenda, Gmail, clima, notícias e Spotify. O cérebro é o Claude (API da Anthropic).
+Assistente para Windows que acorda quando você diz **"Jarvis"**, entende português, responde falando com voz masculina formal e controla seu PC, Google Agenda, Gmail, clima, notícias e Spotify. O cérebro é o Claude (API da Anthropic). Sem créditos, sem chave ou sem internet, ele continua funcionando no **modo local**, que entende os comandos básicos sem IA (seção 3.1).
 
 ```
  microfone ─► "Jarvis" (Whisper rápido, local) ─► gravação ─► Whisper (local)
@@ -19,10 +19,12 @@ Assistente para Windows que acorda quando você diz **"Jarvis"**, entende portug
 1. **Python 3.12 (64 bits):** baixe em <https://www.python.org/downloads/>. Na primeira tela do instalador, marque **"Add python.exe to PATH"**.
 2. **Descompacte** a pasta `jarvis` onde quiser (ex.: `C:\Users\Pedro\jarvis`).
 3. Dê dois cliques em **`instalar.bat`**. Leva alguns minutos. Ele cria um ambiente virtual (`.venv`), instala tudo e cria os arquivos `.env` e `apps.json`.
-4. **Chave da API:**
+4. **Chave da API** (opcional: sem ela o Jarvis roda só no modo local):
+   - A API é paga à parte, por uso. A assinatura do Claude (claude.ai) **não** inclui créditos de API.
    - Entre em <https://console.anthropic.com>, adicione créditos em *Billing*.
    - Em *Settings > Limits*, **defina um limite mensal de gasto** (evita surpresa na fatura).
    - Em *Settings > API Keys*, crie uma chave e cole no `.env` em `ANTHROPIC_API_KEY=`.
+   - Custo aproximado por comando: alguns centavos de real com `claude-sonnet-5-5`, cerca de 20 vezes menos com `claude-haiku-5-5` (troque em `JARVIS_MODELO`).
 5. Rode **`diagnostico.bat`**. Ele testa API, clima, voz, microfone, Whisper e palavra de ativação (pede para você dizer "Jarvis, que horas são?"), e mostra o que estiver falhando.
 6. Rode **`iniciar.bat`**. O instalador já baixa os modelos de fala (`base`, cerca de 150 MB, e `small`, cerca de 500 MB).
 
@@ -80,6 +82,18 @@ Quando o Jarvis termina com uma pergunta ("Confirma às 15h?"), ele já escuta a
 - "Toca Arctic Monkeys no Spotify" / "Que música é essa?"
 - "Tira um print" / "Bloqueia o PC" / "Como está o sistema?"
 
+### 3.1 Modo local (sem IA e sem custo)
+
+Quando o Claude não responde (sem créditos, chave recusada, sem internet ou servidores fora do ar), o Jarvis avisa uma vez no Registro, apaga o selo **CLAUDE** e passa a entender sozinho os comandos mais comuns:
+
+- abrir programas e sites, pesquisar no Google ou YouTube
+- volume (nível, aumentar, diminuir, mudo) e mídia (pausa, próxima, anterior)
+- "toca X" (no Spotify, se configurado; se não, abre no YouTube)
+- hora, data, clima (inclusive "amanhã" e "em São Paulo"), notícias, briefing
+- print, bloquear o PC, status do sistema, agenda e e-mails (se o Google estiver conectado)
+
+Ele **não** conversa livremente nem cria compromissos nesse modo. Assim que o Claude volta a responder, tudo volta ao normal sozinho. Para usar só o modo local, sem nunca chamar a API, ponha `JARVIS_CEREBRO=local` no `.env`. Clima e notícias continuam usando a internet (serviços gratuitos, sem chave); o resto funciona offline.
+
 ---
 
 ## 4. Google Agenda e Gmail (opcional)
@@ -135,7 +149,10 @@ Desde fevereiro de 2026, o Spotify exige **conta Premium** do dono do app para u
 
 **Personalidade:** edite o texto em `core/cerebro.py`, função `prompt_sistema`.
 
-**Modelo:** `JARVIS_MODELO=claude-haiku-5-5` no `.env` deixa tudo mais rápido e barato. `claude-sonnet-5-5` raciocina melhor.
+**Cérebro** (`.env`):
+- `JARVIS_MODELO=claude-haiku-5-5` deixa tudo mais rápido e cerca de 20 vezes mais barato. `claude-sonnet-5-5` raciocina melhor.
+- `JARVIS_CEREBRO`: `auto` (padrão, Claude com o modo local de reserva), `claude` (só o Claude) ou `local` (só comandos básicos, sem custo).
+- `JARVIS_ESFORCO`: quanto o Claude pensa antes de responder. `low` (padrão) é o mais rápido e barato; `medium` ou `high` para pedidos complexos.
 
 **Interface:** `ui/style.css` (cores em `:root`) e `ui/hud.js` (animação do núcleo, função `quadro`). É HTML/CSS/JS puro.
 
@@ -157,6 +174,9 @@ O Claude descobre sozinho quando usar a ferramenta pela descrição.
 
 | Sintoma | Solução |
 |---|---|
+| "Estou sem créditos" / selo CLAUDE apagado | Adicione saldo em <https://console.anthropic.com> (*Billing*). Enquanto isso, o modo local continua funcionando |
+| Voz feminina ou robótica em vez da voz do Jarvis | O edge-tts falhou e caiu para a voz do Windows. Atualize: `.venv\Scripts\pip install -U edge-tts` |
+| "Uma política de Controle de Aplicativo bloqueou este arquivo" | O Controle Inteligente de Aplicativos do Windows bloqueia alguns pacotes (ex.: o do `WAKE_MOTOR=openwakeword`). Use o motor padrão `whisper` |
 | `pip` falha em `onnxruntime` / `ctranslate2` | Use Python **3.12 64 bits**. Apague a pasta `.venv` e rode `instalar.bat` de novo |
 | Janela não abre / erro de WebView | Instale o **Microsoft Edge WebView2 Runtime** (site da Microsoft) |
 | "Jarvis" não ativa | Rode **Jarvis: depurar ativação** no VS Code (ou `DEBUG=true` no `.env`) e veja o que ele ouviu. Fale o nome no começo da frase; tente `WAKE_WHISPER_MODELO=small` |
@@ -192,6 +212,7 @@ jarvis/
 ├── core/
 │   ├── jarvis.py        orquestrador (fila de comandos, estados)
 │   ├── cerebro.py       Claude + personalidade + laço de ferramentas
+│   ├── modo_local.py    comandos básicos sem IA (quando o Claude não está disponível)
 │   ├── ouvidos.py       palavra de ativação + gravação + Whisper
 │   ├── ativacao.py      reconhece "Jarvis" no texto (e as variações)
 │   ├── voz.py           edge-tts + pygame (fallback offline pyttsx3)

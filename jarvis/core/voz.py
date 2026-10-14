@@ -31,6 +31,7 @@ class Voz:
     def __init__(self):
         self.falando = False
         self._parar = threading.Event()
+        self._uma_por_vez = threading.Lock()   # saudação e resposta não falam juntas
         self._loop = None
         self._mixer = False
 
@@ -47,15 +48,16 @@ class Voz:
         texto = limpar_para_fala(texto)
         if not texto:
             return
-        self._parar.clear()
-        self.falando = True
-        try:
-            self._falar_edge(texto)
-        except Exception as erro:  # noqa: BLE001
-            print(f"[Voz] edge-tts falhou ({erro}); usando voz offline.")
-            self._falar_offline(texto)
-        finally:
-            self.falando = False
+        with self._uma_por_vez:
+            self._parar.clear()
+            self.falando = True
+            try:
+                self._falar_edge(texto)
+            except Exception as erro:  # noqa: BLE001
+                print(f"[Voz] edge-tts falhou ({erro}); usando voz offline.")
+                self._falar_offline(texto)
+            finally:
+                self.falando = False
 
     def _falar_edge(self, texto):
         import edge_tts

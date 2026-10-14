@@ -23,7 +23,7 @@ if errorlevel 1 (
 )
 echo Baixando modelos de fala (pode demorar na primeira vez)...
 python -c "from faster_whisper import WhisperModel as W; W('base', device='cpu', compute_type='int8'); W('small', device='cpu', compute_type='int8')"
-python -c "import openwakeword.utils as u; u.download_models(model_names=['hey_jarvis'])"
+python -c "import openwakeword.utils as u; u.download_models(model_names=['hey_jarvis'])" 2>nul || echo openWakeWord indisponivel neste PC. Tudo bem: o modo padrao, dizer so "Jarvis", nao precisa dele.
 if not exist .env copy .env.example .env >nul
 if not exist apps.json copy apps.json.example apps.json >nul
 echo.

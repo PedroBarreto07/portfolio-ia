@@ -23,6 +23,11 @@ class CFG:
     # Cérebro
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
     MODELO = os.getenv("JARVIS_MODELO", "claude-sonnet-5-5")
+    # "auto": usa o Claude e cai para o modo local se ele falhar (sem créditos, sem internet)
+    # "claude": só o Claude | "local": só comandos básicos, sem IA e sem custo
+    CEREBRO = os.getenv("JARVIS_CEREBRO", "auto").strip().lower()
+    # quanto o Claude raciocina antes de responder: low (rápido e barato) / medium / high
+    ESFORCO = os.getenv("JARVIS_ESFORCO", "low").strip().lower()
 
     # Usuário
     NOME = os.getenv("USUARIO_NOME", "Pedro")

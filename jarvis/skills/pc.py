@@ -59,8 +59,16 @@ def _apps():
 def _iniciar(alvo):
     if not WINDOWS:
         raise RuntimeError("abrir programas só funciona no Windows")
-    if alvo.endswith(":") or os.path.exists(alvo):
-        os.startfile(alvo)  # protocolos (spotify:) e caminhos completos
+    if alvo.endswith(":"):
+        os.startfile(alvo)  # protocolos (spotify:, ms-settings:)
+    elif os.path.isabs(alvo):
+        if not os.path.exists(alvo):
+            raise FileNotFoundError(f"o caminho configurado não existe: {alvo}")
+        if alvo.lower().endswith(".exe"):
+            # alguns programas (ex.: OBS) só funcionam abertos a partir da própria pasta
+            subprocess.Popen([alvo], cwd=os.path.dirname(alvo))
+        else:
+            os.startfile(alvo)
     else:
         # "start" resolve nomes registrados no Windows (chrome, winword, code...)
         subprocess.Popen(["cmd", "/c", "start", "", alvo], shell=False,
@@ -78,8 +86,9 @@ def abrir_programa(nome):
     apps = _apps()
     chave = nome.strip().lower()
     alvo = apps.get(chave)
-    if alvo is None:  # tenta casamento parcial: "o vs code" -> "vscode"
-        candidatos = [k for k in apps if k in chave or chave in k]
+    if alvo is None:  # tenta casamento parcial, ignorando espaços: "o vs code" -> "vscode"
+        junto = chave.replace(" ", "")
+        candidatos = [k for k in apps if k.replace(" ", "") in junto or junto in k.replace(" ", "")]
         if len(candidatos) == 1:
             chave, alvo = candidatos[0], apps[candidatos[0]]
     if alvo is None:

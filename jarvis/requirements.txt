@@ -12,12 +12,13 @@ faster-whisper>=1.1
 openwakeword>=0.6   # só no WAKE_MOTOR=openwakeword
 
 # Voz
-edge-tts>=6.1.9
+edge-tts>=7.3.1      # versões antigas levam erro 403 do servidor da Microsoft
 pygame>=2.5
 pyttsx3>=2.90
 
 # Habilidades
 requests>=2.31
+tzdata>=2024.1       # fusos horários no Windows (Google Agenda)
 psutil>=5.9
 pillow>=10.0
 pycaw>=20230407 ; sys_platform == "win32"
