@@ -34,8 +34,13 @@ _PESQUISAR_ONDE = re.compile(_PESQUISAR + r" (?:no|na) (youtube|google) (?:por |
 _PESQUISAR_ALGO = re.compile(_PESQUISAR + r" (?:por |sobre )?(.+?)(?: (?:no|na) (youtube|google))?")
 _TOCAR = re.compile(
     r"(?:toca|tocar|toque|coloca|coloque|bota|poe|ponha|ouvir|escutar)"
-    r"(?: (?:pra tocar|para tocar|pra mim|para mim|ai|agora))*(?: (?:a|o|uma|um))? (.+?)"
+    r"(?: (?:pra tocar|para tocar|pra mim|para mim|ai|agora))*(?: (?:a|o|uma|um))?"
+    r"(?: (?:musica|cancao|faixa))? (.+?)"
     r"(?: (?:no|na) (spotify|youtube))?")
+# "pergunta pro Claude ..." (o Whisper também escreve Claud, Cláudio, Clode, Cloud)
+_CLAUDE = re.compile(
+    r"\b(?:pergunta|pergunte|perguntar|fala|fale|diz|diga|manda|mande|pede|peca|pedir|conta|conte)"
+    r" (?:pro|pra|para o|para|ao|a|o) (?:claude|claud|claudio|clode|cloud)\b(?: (?:que|se|sobre))? (.+)")
 _CRIAR_EVENTO = re.compile(
     r"(?:marca|marcar|marque|agenda|agendar|agende|cria|criar|crie|adiciona|adicionar"
     r"|anota|anotar)\b.*\b(?:reuniao|compromisso|evento|consulta|lembrete|aula|na agenda"
@@ -145,6 +150,9 @@ def interpretar(texto, modulos=None):
 
     if not n:
         return "desconhecido", {}
+    m = _CLAUDE.search(n)
+    if m:
+        return "claude", {"pedido": f.original(*m.span(1))}
     if tem(r"\b(ajuda|o que (voce )?(sabe|consegue|pode) fazer|quais (sao )?(os )?(seus )?comandos)\b"):
         return "ajuda", {}
 
@@ -516,6 +524,11 @@ class ModoLocal:
                       f"indisponível{self._por_que()}.")
         return (f"{inicio} Posso abrir programas, mexer no volume e na música, dizer o clima, "
                 "as notícias e a hora, tirar prints e mostrar o status do PC.")
+
+    def _claude(self, pedido):
+        # normalmente o orquestrador manda direto para a aba Claude; chega aqui sem Claude Code
+        return (f"Não encontrei o Claude Code neste PC, {self._t}. Instale a extensão do Claude "
+                "Code no VS Code ou configure CLAUDE_CODE_EXE no arquivo .env.")
 
     def _por_que(self):
         return f": {self.motivo}" if self.motivo else ""

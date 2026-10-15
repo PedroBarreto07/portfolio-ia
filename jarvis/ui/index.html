@@ -6,6 +6,7 @@
 <title>J.A.R.V.I.S.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="vendor/xterm/xterm.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body data-estado="iniciando">
@@ -14,7 +15,7 @@
   <header class="topo">
     <div class="marca">
       <span class="marca-nome">J.A.R.V.I.S.</span>
-      <span class="marca-sub">assistente pessoal · v1.1</span>
+      <span class="marca-sub">assistente pessoal · v1.2</span>
     </div>
     <ul class="modulos" id="modulos"></ul>
     <div class="relogio">
@@ -32,6 +33,44 @@
         <div class="medidor" data-chave="disco"><span>Disco</span><div class="barra"><i></i></div><b>--</b></div>
         <div class="medidor" data-chave="bateria"><span>Bateria</span><div class="barra"><i></i></div><b>--</b></div>
       </section>
+
+      <section class="bloco widget" id="w-clima">
+        <h2>Clima <button class="mini" data-atualizar="clima" title="Atualizar" aria-label="Atualizar clima">↻</button></h2>
+        <div class="clima-agora">
+          <span class="clima-temp" id="clima-temp">--°</span>
+          <div class="clima-texto"><b id="clima-local">--</b><span id="clima-cond">carregando</span></div>
+        </div>
+        <p class="widget-linha" id="clima-hoje"></p>
+        <ul class="clima-dias" id="clima-dias"></ul>
+      </section>
+
+      <section class="bloco widget" id="w-google">
+        <h2>Agenda de hoje <button class="mini" data-atualizar="google" title="Atualizar" aria-label="Atualizar agenda">↻</button></h2>
+        <ul class="eventos" id="eventos"><li class="vazio">carregando</li></ul>
+        <button class="emails" id="emails" data-cmd="Tenho e-mails não lidos?" hidden>
+          <b id="emails-n">--</b> e-mails não lidos
+        </button>
+      </section>
+
+      <section class="bloco widget" id="w-spotify">
+        <h2>Player</h2>
+        <div class="player">
+          <img id="capa" alt="" hidden>
+          <div class="player-info"><b id="musica">carregando</b><span id="artista"></span></div>
+        </div>
+        <div class="player-botoes">
+          <button data-midia="anterior" title="Anterior" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+          </button>
+          <button data-midia="tocar_pausar" id="btn-play" title="Tocar / pausar" aria-label="Tocar ou pausar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path id="icone-play" d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button data-midia="proxima" title="Próxima" aria-label="Próxima">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+        </div>
+      </section>
+
       <section class="bloco">
         <h2>Comandos rápidos</h2>
         <div class="atalhos">
@@ -58,9 +97,47 @@
     </section>
 
     <aside class="lateral direita">
-      <section class="bloco registro-bloco">
-        <h2>Registro <button class="mini" id="btn-esquecer" title="Apagar memória da conversa">limpar</button></h2>
-        <ol class="registro" id="registro"></ol>
+      <section class="bloco abas-bloco">
+        <nav class="abas" role="tablist">
+          <button role="tab" data-aba="registro" class="ativa">Registro</button>
+          <button role="tab" data-aba="claude">Claude <i class="ponto" id="claude-ponto"></i></button>
+          <button role="tab" data-aba="terminal">Terminal</button>
+        </nav>
+
+        <div class="aba-conteudo ativa" data-aba="registro" role="tabpanel">
+          <div class="aba-barra">
+            <span>Conversa com o Jarvis</span>
+            <button class="mini" id="btn-esquecer" title="Apagar memória da conversa">limpar</button>
+          </div>
+          <ol class="registro" id="registro"></ol>
+        </div>
+
+        <div class="aba-conteudo" data-aba="claude" role="tabpanel">
+          <div class="aba-barra">
+            <span class="pasta" id="claude-pasta" title="Pasta onde o Claude trabalha">--</span>
+            <label class="chave" title="Deixa o Claude rodar comandos no terminal (Bash). Edição de arquivos já é liberada.">
+              <input type="checkbox" id="claude-comandos"> comandos
+            </label>
+            <button class="mini" id="claude-nova" title="Começar uma conversa nova">nova</button>
+            <button class="mini" id="claude-parar" title="Interromper o Claude" disabled>parar</button>
+          </div>
+          <div class="chat" id="chat">
+            <p class="chat-aviso">Converse com o Claude Code: ele lê e edita arquivos na pasta acima.
+              Também dá para falar "Jarvis, pergunta pro Claude…".</p>
+          </div>
+          <form class="chat-entrada" id="chat-form" autocomplete="off">
+            <textarea id="chat-texto" rows="2" placeholder="Mensagem para o Claude (Enter envia, Shift+Enter pula linha)"></textarea>
+            <button type="submit" class="enviar">Enviar</button>
+          </form>
+        </div>
+
+        <div class="aba-conteudo" data-aba="terminal" role="tabpanel">
+          <div class="aba-barra">
+            <span>Claude Code · terminal interativo</span>
+            <button class="mini" id="terminal-reiniciar" title="Fechar e abrir o Claude Code de novo">reiniciar</button>
+          </div>
+          <div class="terminal" id="terminal"></div>
+        </div>
       </section>
     </aside>
   </main>
@@ -78,6 +155,8 @@
     </button>
   </footer>
 
+  <script src="vendor/xterm/xterm.js"></script>
+  <script src="vendor/xterm/addon-fit.js"></script>
   <script src="hud.js"></script>
 </body>
 </html>

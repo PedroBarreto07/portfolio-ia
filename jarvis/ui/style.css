@@ -67,10 +67,17 @@ body {
 /* ---------- painel ---------- */
 .painel {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(380px, 2fr) minmax(260px, 1.2fr);
+  grid-template-columns: minmax(230px, 1fr) minmax(380px, 2fr) minmax(300px, 1.3fr);
   gap: 20px; padding: 20px 24px; min-height: 0;
+  transition: grid-template-columns 0.35s ease;
 }
+/* aba Claude ou Terminal aberta: a coluna da direita ganha espaço */
+body.largo .painel { grid-template-columns: minmax(230px, 0.8fr) minmax(220px, 0.8fr) minmax(600px, 2.6fr); }
 .lateral { display: flex; flex-direction: column; gap: 16px; min-height: 0; }
+.lateral.esquerda { overflow-y: auto; padding-right: 4px; }
+.lateral.esquerda > .bloco { flex-shrink: 0; }
+.lateral.esquerda::-webkit-scrollbar { width: 4px; }
+.lateral.esquerda::-webkit-scrollbar-thumb { background: var(--ciano-escuro); }
 .bloco {
   background: var(--painel);
   border: 1px solid var(--borda);
@@ -128,17 +135,109 @@ body {
   font-size: 17px; line-height: 1.4; color: var(--texto);
 }
 
+/* ---------- abas (Registro / Claude / Terminal) ---------- */
+.abas-bloco { flex: 1; display: flex; flex-direction: column; min-height: 0; padding-top: 10px; }
+.abas { display: flex; gap: 4px; border-bottom: 1px solid var(--borda); margin-bottom: 10px; }
+.abas button {
+  font-family: var(--fonte); font-size: 12px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--texto-suave); background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: 6px 12px 8px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+}
+.abas button:hover { color: var(--texto); }
+.abas button.ativa { color: var(--ciano); border-bottom-color: var(--ciano); }
+.ponto { width: 6px; height: 6px; border-radius: 50%; background: transparent; }
+.ponto.ocupado { background: var(--ambar); box-shadow: 0 0 6px var(--ambar); animation: piscar 1s ease-in-out infinite; }
+@keyframes piscar { 50% { opacity: 0.3; } }
+.aba-conteudo { display: none; flex: 1; flex-direction: column; min-height: 0; }
+.aba-conteudo.ativa { display: flex; }
+.aba-barra {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--texto-suave);
+}
+.aba-barra > span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aba-barra .pasta { font-family: var(--mono); text-transform: none; letter-spacing: 0; }
+.chave { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.chave input { accent-color: var(--ambar); }
+.mini:disabled { opacity: 0.35; cursor: default; }
+
 /* ---------- registro ---------- */
-.registro-bloco { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .registro { list-style: none; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; user-select: text; }
-.registro::-webkit-scrollbar { width: 4px; }
-.registro::-webkit-scrollbar-thumb { background: var(--ciano-escuro); }
+.registro::-webkit-scrollbar, .chat::-webkit-scrollbar { width: 4px; }
+.registro::-webkit-scrollbar-thumb, .chat::-webkit-scrollbar-thumb { background: var(--ciano-escuro); }
 .registro li { font-size: 14px; line-height: 1.35; padding-left: 10px; border-left: 2px solid var(--borda); animation: entrar 0.3s ease; }
 .registro li small { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--texto-suave); margin-bottom: 2px; }
 .registro li.jarvis { border-left-color: var(--ciano); }
 .registro li.jarvis small { color: var(--ciano); }
 .registro li.aviso { border-left-color: var(--ambar); color: var(--texto-suave); font-size: 12px; }
 @keyframes entrar { from { opacity: 0; transform: translateX(8px); } }
+
+/* ---------- aba Claude ---------- */
+.chat { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 4px; user-select: text; min-height: 0; }
+.chat-aviso { color: var(--texto-suave); font-size: 13px; line-height: 1.4; }
+.chat .msg { font-size: 14px; line-height: 1.45; padding: 8px 12px; border-left: 2px solid var(--borda); white-space: pre-wrap; word-wrap: break-word; animation: entrar 0.3s ease; }
+.chat .msg.voce { border-left-color: var(--texto-suave); background: rgba(79, 216, 255, 0.04); }
+.chat .msg.claude { border-left-color: #d97757; }
+.chat .msg.claude::before { content: "Claude"; display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #d97757; margin-bottom: 2px; white-space: normal; }
+.chat .msg.erro { border-left-color: var(--vermelho); color: var(--vermelho); font-size: 13px; }
+.chat .ferramenta-linha { font-family: var(--mono); font-size: 11px; color: var(--ambar); padding-left: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat .ferramenta-linha::before { content: "› "; }
+.chat .pensando { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ambar); padding-left: 14px; animation: piscar 1.2s ease-in-out infinite; }
+.chat pre { font-family: var(--mono); font-size: 12px; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--borda); padding: 8px 10px; margin: 6px 0; overflow-x: auto; white-space: pre; }
+.chat code { font-family: var(--mono); font-size: 0.9em; color: var(--ciano); }
+.chat pre code { color: var(--texto); }
+.chat-entrada { display: flex; margin-top: 10px; border: 1px solid var(--borda-forte); background: rgba(4, 12, 20, 0.8); }
+.chat-entrada textarea {
+  flex: 1; resize: none; background: transparent; border: 0; outline: 0; color: var(--texto);
+  font-family: var(--fonte); font-size: 15px; padding: 10px 12px; line-height: 1.35;
+}
+.chat-entrada textarea::placeholder { color: var(--texto-suave); }
+.chat-entrada textarea:disabled { opacity: 0.4; }
+
+/* ---------- aba Terminal ---------- */
+.terminal { flex: 1; min-height: 0; background: #03080e; border: 1px solid var(--borda); padding: 6px 4px 6px 8px; }
+.terminal .xterm { height: 100%; }
+.terminal .xterm-viewport::-webkit-scrollbar { width: 6px; }
+.terminal .xterm-viewport::-webkit-scrollbar-thumb { background: var(--ciano-escuro); }
+.terminal-aviso { color: var(--texto-suave); font-size: 13px; padding: 12px; }
+
+/* ---------- painéis (clima, agenda, player) ---------- */
+.widget { padding-bottom: 12px; }
+.widget h2 { margin-bottom: 10px; }
+.widget-linha { font-size: 12px; color: var(--texto-suave); margin-top: 6px; letter-spacing: 0.04em; }
+.clima-agora { display: flex; align-items: center; gap: 12px; }
+.clima-temp { font-family: var(--mono); font-size: 32px; color: var(--ciano); text-shadow: 0 0 12px rgba(79, 216, 255, 0.45); line-height: 1; }
+.clima-texto { display: flex; flex-direction: column; min-width: 0; }
+.clima-texto b { font-weight: 600; font-size: 14px; }
+.clima-texto span { font-size: 13px; color: var(--texto-suave); }
+.clima-dias { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+.clima-dias li { text-align: center; border: 1px solid var(--borda); padding: 5px 2px; font-size: 12px; }
+.clima-dias b { display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; color: var(--texto-suave); }
+.clima-dias span { font-family: var(--mono); font-size: 11px; }
+.clima-dias small { display: block; font-size: 10px; color: var(--ciano); }
+.eventos { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.eventos li { display: grid; grid-template-columns: 52px 1fr; gap: 8px; font-size: 13px; align-items: baseline; }
+.eventos li b { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--ciano); }
+.eventos li.vazio { display: block; color: var(--texto-suave); }
+.emails {
+  margin-top: 10px; width: 100%; text-align: left; font-family: var(--fonte); font-size: 13px; color: var(--texto-suave);
+  background: rgba(79, 216, 255, 0.05); border: 1px solid var(--borda); padding: 7px 10px; cursor: pointer;
+}
+.emails:hover { border-color: var(--borda-forte); color: var(--texto); }
+.emails b { font-family: var(--mono); font-weight: 600; color: var(--ciano); }
+.player { display: flex; align-items: center; gap: 10px; min-height: 48px; }
+.player img { width: 48px; height: 48px; object-fit: cover; border: 1px solid var(--borda-forte); }
+.player-info { display: flex; flex-direction: column; min-width: 0; }
+.player-info b, .player-info span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player-info b { font-weight: 600; font-size: 14px; }
+.player-info span { font-size: 12px; color: var(--texto-suave); }
+.player-botoes { display: flex; justify-content: center; gap: 14px; margin-top: 10px; }
+.player-botoes button {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: rgba(79, 216, 255, 0.06); border: 1px solid var(--borda);
+}
+.player-botoes button:hover { background: rgba(79, 216, 255, 0.18); border-color: var(--borda-forte); }
+.player-botoes svg { width: 16px; height: 16px; fill: var(--ciano); }
+#btn-play { width: 42px; height: 42px; border-color: var(--borda-forte); }
 
 /* ---------- rodapé ---------- */
 .rodape { display: flex; align-items: center; gap: 12px; padding: 14px 24px 18px; border-top: 1px solid var(--borda); }
@@ -166,9 +265,12 @@ body[data-estado="ouvindo"] #btn-mic svg { fill: var(--fundo); }
 button:focus-visible, input:focus-visible { outline: 1px solid var(--ciano); outline-offset: 2px; }
 
 @media (max-width: 1050px) {
-  .painel { grid-template-columns: 1fr 1.6fr; }
+  .painel, body.largo .painel { grid-template-columns: 1fr 1.6fr; }
   .lateral.esquerda { display: none; }
+  body.largo .painel { grid-template-columns: 1fr; }
+  body.largo .centro { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .registro li { animation: none; }
+  .registro li, .chat .msg { animation: none; }
+  .painel { transition: none; }
 }

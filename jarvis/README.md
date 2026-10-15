@@ -84,7 +84,7 @@ Quando o Jarvis termina com uma pergunta ("Confirma às 15h?"), ele já escuta a
 
 ### 3.1 Modo local (sem IA e sem custo)
 
-Quando o Claude não responde (sem créditos, chave recusada, sem internet ou servidores fora do ar), o Jarvis avisa uma vez no Registro, apaga o selo **CLAUDE** e passa a entender sozinho os comandos mais comuns:
+Quando o Claude não responde (sem créditos, chave recusada, sem internet ou servidores fora do ar), o Jarvis avisa uma vez no Registro, apaga o selo **CLAUDE API** e passa a entender sozinho os comandos mais comuns:
 
 - abrir programas e sites, pesquisar no Google ou YouTube
 - volume (nível, aumentar, diminuir, mudo) e mídia (pausa, próxima, anterior)
@@ -93,6 +93,30 @@ Quando o Claude não responde (sem créditos, chave recusada, sem internet ou se
 - print, bloquear o PC, status do sistema, agenda e e-mails (se o Google estiver conectado)
 
 Ele **não** conversa livremente nem cria compromissos nesse modo. Assim que o Claude volta a responder, tudo volta ao normal sozinho. Para usar só o modo local, sem nunca chamar a API, ponha `JARVIS_CEREBRO=local` no `.env`. Clima e notícias continuam usando a internet (serviços gratuitos, sem chave); o resto funciona offline.
+
+### 3.2 Interface: painéis e abas
+
+**Coluna da esquerda:** medidores do sistema, **Clima** (agora e próximos 3 dias), **Agenda de hoje** com o número de e-mails não lidos (clique para ouvir o resumo), **Player** (música atual com capa e botões; sem Spotify configurado, os botões usam as teclas de mídia) e os comandos rápidos. O botão ↻ atualiza na hora; sozinhos, o player atualiza a cada 5 segundos, a agenda a cada 5 minutos e o clima a cada 30.
+
+**Coluna da direita, em abas:**
+
+| Aba | O que faz |
+|---|---|
+| Registro | A conversa com o Jarvis, como antes |
+| Claude | Chat com o **Claude Code**: ele lê e edita arquivos na pasta mostrada no topo da aba (`CLAUDE_CODE_PASTA`). A chave **comandos** deixa ele rodar comandos no terminal; desligada, ele só lê e edita arquivos. **parar** interrompe, **nova** começa outra conversa |
+| Terminal | O Claude Code interativo de verdade, com as confirmações dele. Na primeira vez, ele pergunta o tema de cores: escolha com as setas e Enter |
+
+Com a aba Claude ou Terminal aberta, a coluna da direita fica mais larga.
+
+### 3.3 Claude Code (sem créditos da API)
+
+O Jarvis usa o **Claude Code** que vem na extensão do VS Code (ou o comando `claude`, se instalado). Ele usa a **sua assinatura do Claude**, não os créditos da API, e conta no limite de uso da assinatura. Três jeitos de usar:
+
+- **Por voz:** "Jarvis, pergunta pro Claude quantos arquivos tem na pasta Downloads". A resposta aparece na aba Claude e o Jarvis fala o resumo.
+- **Perguntas livres:** com `JARVIS_CEREBRO=auto` e sem créditos da API, o que o modo local não entende ("me conta uma piada", "me explica...") vai para o Claude Code, com a personalidade do Jarvis. Leva uns 5 segundos. Para desligar: `CLAUDE_CODE_CEREBRO=false`.
+- **Pelas abas** Claude e Terminal.
+
+> **Cuidado:** na aba Claude, o Claude Code **edita arquivos sem pedir confirmação**, porque o modo automático não tem como perguntar. Para tarefas sensíveis, prefira a aba Terminal, que pede confirmação a cada passo.
 
 ---
 
@@ -174,7 +198,7 @@ O Claude descobre sozinho quando usar a ferramenta pela descrição.
 
 | Sintoma | Solução |
 |---|---|
-| "Estou sem créditos" / selo CLAUDE apagado | Adicione saldo em <https://console.anthropic.com> (*Billing*). Enquanto isso, o modo local continua funcionando |
+| "Estou sem créditos" / selo CLAUDE API apagado | Adicione saldo em <https://console.anthropic.com> (*Billing*). Enquanto isso, o modo local continua funcionando |
 | Voz feminina ou robótica em vez da voz do Jarvis | O edge-tts falhou e caiu para a voz do Windows. Atualize: `.venv\Scripts\pip install -U edge-tts` |
 | "Uma política de Controle de Aplicativo bloqueou este arquivo" | O Controle Inteligente de Aplicativos do Windows bloqueia alguns pacotes (ex.: o do `WAKE_MOTOR=openwakeword`). Use o motor padrão `whisper` |
 | `pip` falha em `onnxruntime` / `ctranslate2` | Use Python **3.12 64 bits**. Apague a pasta `.venv` e rode `instalar.bat` de novo |
@@ -213,12 +237,15 @@ jarvis/
 │   ├── jarvis.py        orquestrador (fila de comandos, estados)
 │   ├── cerebro.py       Claude + personalidade + laço de ferramentas
 │   ├── modo_local.py    comandos básicos sem IA (quando o Claude não está disponível)
+│   ├── claude_code.py   Claude Code: aba Claude e respostas livres por voz
+│   ├── terminal.py      aba Terminal (Claude Code interativo, via pywinpty)
+│   ├── paineis.py       dados dos painéis de clima, agenda e player
 │   ├── ouvidos.py       palavra de ativação + gravação + Whisper
 │   ├── ativacao.py      reconhece "Jarvis" no texto (e as variações)
 │   ├── voz.py           edge-tts + pygame (fallback offline pyttsx3)
 │   └── ponte.py         Python → interface
 ├── skills/              habilidades (pc, info, google_svc, spotify_svc)
-├── ui/                  interface HUD (index.html, style.css, hud.js)
+├── ui/                  interface HUD (index.html, style.css, hud.js; vendor/xterm = terminal, licença MIT)
 ├── testes/              testes automáticos (sem microfone nem API)
 ├── .vscode/             configurações para rodar, depurar e testar no VS Code
 ├── instalar.bat · iniciar.bat · iniciar_com_log.bat · diagnostico.bat

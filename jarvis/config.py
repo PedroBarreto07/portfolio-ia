@@ -55,6 +55,14 @@ class CFG:
     CONTINUAR_SE_PERGUNTA = _bool("OUVIR_APOS_PERGUNTA", True)
     DEBUG = _bool("DEBUG", False)
 
+    # Claude Code (usa a assinatura do Claude, não os créditos da API)
+    CLAUDE_CODE_EXE = os.getenv("CLAUDE_CODE_EXE", "").strip()          # vazio = procura sozinho
+    # pasta onde o Claude trabalha na aba Claude e no Terminal (padrão: a pasta acima do Jarvis)
+    CLAUDE_CODE_PASTA = os.getenv("CLAUDE_CODE_PASTA", "").strip() or str(BASE.parent)
+    # responde as perguntas livres que o modo local não entende (só com JARVIS_CEREBRO=auto)
+    CLAUDE_CODE_CEREBRO = _bool("CLAUDE_CODE_CEREBRO", True)
+    CLAUDE_CODE_MODELO = os.getenv("CLAUDE_CODE_MODELO", "sonnet").strip()
+
     # Spotify
     SPOTIFY_ID = os.getenv("SPOTIPY_CLIENT_ID", "")
     SPOTIFY_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET", "")

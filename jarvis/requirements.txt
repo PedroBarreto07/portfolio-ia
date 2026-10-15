@@ -4,6 +4,7 @@ python-dotenv>=1.0
 
 # Interface
 pywebview>=5.0
+pywinpty>=2.0 ; sys_platform == "win32"   # aba Terminal (Claude Code interativo)
 
 # Ouvidos
 sounddevice>=0.4.6

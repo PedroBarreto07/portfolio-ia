@@ -17,6 +17,9 @@ ESCOPOS = [
     "https://www.googleapis.com/auth/gmail.readonly",    # só ler e-mails, nunca enviar/apagar
 ]
 FUSO = "America/Sao_Paulo"
+# a conexão com o Google cai quando fica parada (SSLEOFError); a biblioteca tenta de novo.
+# Só nas leituras: repetir a criação de um evento poderia duplicá-lo.
+RETENTATIVAS = 2
 
 
 def credenciais(permitir_login=False):
@@ -72,7 +75,7 @@ def agenda_compromissos(data_inicio=None, dias=1):
     resp = _servico("calendar", "v3").events().list(
         calendarId="primary", timeMin=inicio.isoformat(), timeMax=fim.isoformat(),
         singleEvents=True, orderBy="startTime", maxResults=25,
-    ).execute()
+    ).execute(num_retries=RETENTATIVAS)
     eventos = []
     for ev in resp.get("items", []):
         comeco = ev["start"].get("dateTime") or ev["start"].get("date")
@@ -125,7 +128,7 @@ def criar_compromisso(titulo, inicio, duracao_min=60, descricao=""):
 def emails(busca="is:unread in:inbox", quantidade=5):
     gmail = _servico("gmail", "v1")
     lista = gmail.users().messages().list(
-        userId="me", q=busca, maxResults=int(quantidade)).execute()
+        userId="me", q=busca, maxResults=int(quantidade)).execute(num_retries=RETENTATIVAS)
     mensagens = lista.get("messages", [])
     if not mensagens:
         return "Nenhum e-mail encontrado para essa busca."
@@ -133,7 +136,7 @@ def emails(busca="is:unread in:inbox", quantidade=5):
     for m in mensagens:
         msg = gmail.users().messages().get(
             userId="me", id=m["id"], format="metadata",
-            metadataHeaders=["From", "Subject", "Date"]).execute()
+            metadataHeaders=["From", "Subject", "Date"]).execute(num_retries=RETENTATIVAS)
         cab = {h["name"]: h["value"] for h in msg.get("payload", {}).get("headers", [])}
         saida.append({
             "de": cab.get("From", ""),
@@ -143,3 +146,10 @@ def emails(busca="is:unread in:inbox", quantidade=5):
         })
     total = lista.get("resultSizeEstimate", len(saida))
     return json.dumps({"total_aproximado": total, "emails": saida}, ensure_ascii=False)
+
+
+def nao_lidos():
+    """Número exato de e-mails não lidos na caixa de entrada (para o painel)."""
+    caixa = _servico("gmail", "v1").users().labels().get(
+        userId="me", id="INBOX").execute(num_retries=RETENTATIVAS)
+    return caixa.get("messagesUnread", 0)

@@ -127,7 +127,7 @@ class TestTrocaParaModoLocal(unittest.TestCase):
         j = Jarvis(UIFalsa(), com_voz=False, com_microfone=False)
         j.cerebro = cer.Cerebro({}, cliente=ClienteFalso(*respostas))
         j.local = ModoLocal({})
-        j._mods_ui = {"Claude": True}
+        j._mods_ui = {"Claude API": True}
         return j
 
     def test_sem_credito_usa_modo_local(self):
@@ -137,7 +137,7 @@ class TestTrocaParaModoLocal(unittest.TestCase):
         self.assertIn("sem créditos", j._responder("me explica a relatividade"))
         avisos = [a for m, a in j.ui.eventos if m == "aviso"]
         self.assertEqual(len(avisos), 1)   # avisa uma vez só
-        self.assertFalse(j._mods_ui["Claude"])
+        self.assertFalse(j._mods_ui["Claude API"])
 
     def test_modo_claude_nao_troca(self):
         CFG.CEREBRO = "claude"
