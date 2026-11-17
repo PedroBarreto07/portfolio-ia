@@ -29,13 +29,16 @@ export const DEFAULT_LANG = 'pt'; // 'pt' | 'en'
 /*  Khronos, Poly Haven — ver README / CREDITS).                              */
 /*  group 'deferred' = carrega em segundo plano depois do botão de início.    */
 /* -------------------------------------------------------------------------- */
+// Prefixo do deploy (ex.: /portfolio-ia/nexora-site/ no GitHub Pages; / no dev local)
+const BASE = import.meta.env.BASE_URL;
+
 export const ASSETS = {
   models: {
-    satellite: '/assets/models/satellite_ssl1300.glb', // NASA 3D Resources (SSL-1300); animação "Deploy" opcional
+    satellite: BASE + 'assets/models/satellite_ssl1300.glb', // NASA 3D Resources (SSL-1300); animação "Deploy" opcional
     diamond: null,
     rack: null,
     chip: null,
-    car: { url: '/assets/models/car_concept.glb', group: 'deferred' }, // Khronos Car Concept (CC BY 4.0)
+    car: { url: BASE + 'assets/models/car_concept.glb', group: 'deferred' }, // Khronos Car Concept (CC BY 4.0)
   },
   // Variante de pintura do carro (KHR_materials_variants): 'Carmine Candy' | 'Pearly Swirly' | 'Torched Graphite'
   carVariant: 'Carmine Candy',
@@ -45,27 +48,27 @@ export const ASSETS = {
   textures: {
     cityMap: null, // imagem aérea de cidade (senão o mapa é procedural)
     // Terra — NASA Blue Marble / Black Marble / nuvens
-    earthDay: '/assets/earth/day_4k.jpg',
-    earthDayDetail: '/assets/earth/day_detail.jpg',
-    earthNight: '/assets/earth/night_4k.jpg',
-    earthClouds: { url: '/assets/earth/clouds_4k.jpg', linear: true },
-    earthCloudsDetail: { url: '/assets/earth/clouds_detail.jpg', linear: true },
+    earthDay: BASE + 'assets/earth/day_4k.jpg',
+    earthDayDetail: BASE + 'assets/earth/day_detail.jpg',
+    earthNight: BASE + 'assets/earth/night_4k.jpg',
+    earthClouds: { url: BASE + 'assets/earth/clouds_4k.jpg', linear: true },
+    earthCloudsDetail: { url: BASE + 'assets/earth/clouds_detail.jpg', linear: true },
     // Céu — NASA SVS Deep Star Maps 2020
-    starmap: '/assets/space/starmap_4k.jpg',
+    starmap: BASE + 'assets/space/starmap_4k.jpg',
     // Cena do carro — Poly Haven (CC0)
-    roadBackplate: { url: '/assets/hdri/lago_disola_8k.jpg', mobile: '/assets/hdri/lago_disola_4k.jpg', group: 'deferred' },
-    asphaltDiff: { url: '/assets/textures/asphalt_02_diff.jpg', repeat: true, group: 'deferred' },
-    asphaltNor: { url: '/assets/textures/asphalt_02_nor.jpg', repeat: true, linear: true, group: 'deferred' },
-    asphaltArm: { url: '/assets/textures/asphalt_02_arm.jpg', repeat: true, linear: true, group: 'deferred' },
-    snowDiff: { url: '/assets/textures/snow_02_diff.jpg', repeat: true, group: 'deferred' },
-    snowNor: { url: '/assets/textures/snow_02_nor.jpg', repeat: true, linear: true, group: 'deferred' },
-    snowArm: { url: '/assets/textures/snow_02_arm.jpg', repeat: true, linear: true, group: 'deferred' },
-    rocksDiff: { url: '/assets/textures/rocks_ground_02_diff.jpg', repeat: true, group: 'deferred' },
-    rocksNor: { url: '/assets/textures/rocks_ground_02_nor.jpg', repeat: true, linear: true, group: 'deferred' },
-    rocksArm: { url: '/assets/textures/rocks_ground_02_arm.jpg', repeat: true, linear: true, group: 'deferred' },
+    roadBackplate: { url: BASE + 'assets/hdri/lago_disola_8k.jpg', mobile: BASE + 'assets/hdri/lago_disola_4k.jpg', group: 'deferred' },
+    asphaltDiff: { url: BASE + 'assets/textures/asphalt_02_diff.jpg', repeat: true, group: 'deferred' },
+    asphaltNor: { url: BASE + 'assets/textures/asphalt_02_nor.jpg', repeat: true, linear: true, group: 'deferred' },
+    asphaltArm: { url: BASE + 'assets/textures/asphalt_02_arm.jpg', repeat: true, linear: true, group: 'deferred' },
+    snowDiff: { url: BASE + 'assets/textures/snow_02_diff.jpg', repeat: true, group: 'deferred' },
+    snowNor: { url: BASE + 'assets/textures/snow_02_nor.jpg', repeat: true, linear: true, group: 'deferred' },
+    snowArm: { url: BASE + 'assets/textures/snow_02_arm.jpg', repeat: true, linear: true, group: 'deferred' },
+    rocksDiff: { url: BASE + 'assets/textures/rocks_ground_02_diff.jpg', repeat: true, group: 'deferred' },
+    rocksNor: { url: BASE + 'assets/textures/rocks_ground_02_nor.jpg', repeat: true, linear: true, group: 'deferred' },
+    rocksArm: { url: BASE + 'assets/textures/rocks_ground_02_arm.jpg', repeat: true, linear: true, group: 'deferred' },
   },
   hdri: {
-    road: { url: '/assets/hdri/lago_disola_2k.hdr', group: 'deferred' }, // iluminação/reflexos do carro
+    road: { url: BASE + 'assets/hdri/lago_disola_2k.hdr', group: 'deferred' }, // iluminação/reflexos do carro
   },
   // Região da Terra coberta pela textura de alta resolução (graus) — igual ao scripts/process-assets.mjs
   earthDetail: { lon0: -75, lon1: -5, lat0: 15, lat1: -40 },

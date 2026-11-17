@@ -22,8 +22,8 @@ export class AssetManager {
     this.renderer = renderer;
     this.items = {};
     this.groups = {};
-    const draco = new DRACOLoader().setDecoderPath('/decoders/draco/');
-    const ktx2 = new KTX2Loader().setTranscoderPath('/decoders/basis/').detectSupport(renderer);
+    const draco = new DRACOLoader().setDecoderPath(import.meta.env.BASE_URL + 'decoders/draco/');
+    const ktx2 = new KTX2Loader().setTranscoderPath(import.meta.env.BASE_URL + 'decoders/basis/').detectSupport(renderer);
     this.gltf = new GLTFLoader().setDRACOLoader(draco).setKTX2Loader(ktx2).setMeshoptDecoder(MeshoptDecoder);
     this.tex = new THREE.TextureLoader();
     this.hdr = new HDRLoader().setDataType(THREE.HalfFloatType);

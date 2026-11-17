@@ -1,0 +1,64 @@
+name: Publicar demos no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            nexora-site/package-lock.json
+            ora-60a-site/package-lock.json
+
+      - name: Build do Nexora
+        working-directory: nexora-site
+        run: |
+          npm ci
+          npx vite build --base=/${{ github.event.repository.name }}/nexora-site/
+
+      - name: Build do ORA 60A
+        working-directory: ora-60a-site
+        run: |
+          npm ci
+          npx vite build --base=/${{ github.event.repository.name }}/ora-60a-site/
+
+      - name: Montar o site
+        run: |
+          mkdir -p _site
+          cp index.html 404.html _site/
+          cp -r aurora-site _site/aurora-site
+          cp -r nexora-site/dist _site/nexora-site
+          cp -r ora-60a-site/dist _site/ora-60a-site
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
